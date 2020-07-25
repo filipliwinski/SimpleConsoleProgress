@@ -1,2 +1,2 @@
-# ConsoleProgressBar
-Simple progress bar for console .NET projects.
+# ConsoleProgress
+Simple progress indicator for console .NET projects.
