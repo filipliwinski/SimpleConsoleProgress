@@ -1,0 +1,11 @@
+# Starter pipeline
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/ConsoleProgress.csproj'
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
