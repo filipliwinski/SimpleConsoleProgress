@@ -1,5 +1,5 @@
 trigger:
-- main
+- master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -16,9 +16,11 @@ steps:
         packageType: sdk
 
     - task: DotNetCoreCLI@2
+      displayName: "Build for $(buildConfiguration)"
       inputs:
         command: 'build'
         projects: '**/ConsoleProgress.csproj'
+        arguments: '--configuration $(buildConfiguration)'
 
     - task: PublishBuildArtifacts@1
       displayName: "Upload Artifacts"
