@@ -1,6 +1,8 @@
 # ConsoleProgress
 Simple progress indicator for console .NET projects.
 
+[![Build Status](https://filipliwinski.visualstudio.com/ConsoleProgress/_apis/build/status/ConsoleProgress?branchName=master)](https://filipliwinski.visualstudio.com/ConsoleProgress/_build/latest?definitionId=1&branchName=master)
+
 ## How to use
 
     Console.WriteLine("ProgressBar.Write():");
