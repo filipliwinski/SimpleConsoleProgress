@@ -10,25 +10,19 @@ variables:
 steps:
 
     - task: UseDotNet@2 
-      displayName: ".NET Core 3.1.x"
+      displayName: "Use .NET Core 3.1.x"
       inputs:
         version: '3.1.x'
         packageType: sdk
-      command: 'build'
-      projects: '**./ConsoleProgress.csproj'
-      displayName: 'dotnet build $(buildConfiguration)'
 
     - task: DotNetCoreCLI@2
-      displayName: "Publish"
       inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-        zipAfterPublish: true
+        command: 'build'
+        projects: '**/ConsoleProgress.csproj'
 
     - task: PublishBuildArtifacts@1
       displayName: "Upload Artifacts"
       inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-        artifactName: 'ConsoleProgress' 
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'ConsoleProgress'
     
