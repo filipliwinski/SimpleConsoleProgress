@@ -14,7 +14,8 @@ steps:
       inputs:
         version: '3.1.x'
         packageType: sdk
-    - script: dotnet build --configuration $(buildConfiguration)
+      command: 'build'
+      projects: '**./ConsoleProgress.csproj'
       displayName: 'dotnet build $(buildConfiguration)'
 
     - task: DotNetCoreCLI@2
@@ -30,3 +31,4 @@ steps:
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
         artifactName: 'ConsoleProgress' 
+    
