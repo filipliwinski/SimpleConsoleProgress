@@ -23,15 +23,15 @@ steps:
         arguments: '--configuration $(buildConfiguration)'
 
     - task: CopyFiles@2
-      displayName: "Copy files to $(build.artifactstagingdirectory)"
+      displayName: "Copy files to $(Build.ArtifactStagingDirectory)"
       inputs:
-        SourceFolder: '$(build.binariesdirectory)'
-        Contents: '**'
-        TargetFolder: '$(build.artifactstagingdirectory)'
+        sourceFolder: '$(Build.SourcesDirectory)'
+        contents: '**/$(buildConfiguration)/**/?(*.exe|*.dll|*.pdb|*.nupkg)'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
       displayName: "Publish Artifacts"
       inputs:
-        pathtoPublish: '$(build.artifactstagingdirectory)'
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'SimpleConsoleProgress'
     
