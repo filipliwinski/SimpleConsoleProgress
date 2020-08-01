@@ -22,8 +22,15 @@ steps:
         projects: '**/SimpleConsoleProgress.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
+    - task: CopyFiles@2
+      displayName: "Copy files to $(build.artifactstagingdirectory)"
+      inputs:
+        SourceFolder: '$(agent.builddirectory)'
+        Contents: '**'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+
     - task: PublishBuildArtifacts@1
-      displayName: "Upload Artifacts"
+      displayName: "Publish Artifacts"
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'SimpleConsoleProgress'
