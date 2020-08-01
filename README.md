@@ -1,7 +1,7 @@
 # SimpleConsoleProgress
 Simple progress indicator for .NET console projects.
 
-[![Build Status](https://filipliwinski.visualstudio.com/ConsoleProgress/_apis/build/status/ConsoleProgress?branchName=master)](https://filipliwinski.visualstudio.com/ConsoleProgress/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://filipliwinski.visualstudio.com/SimpleConsoleProgress/_apis/build/status/SimpleConsoleProgress?branchName=master)](https://filipliwinski.visualstudio.com/SimpleConsoleProgress/_build/latest?definitionId=2&branchName=master)
 
 ## How to use
     using SimpleConsoleProgress;
