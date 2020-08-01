@@ -10,8 +10,15 @@
     <Description>Simple progress indicator for .NET console projects.</Description>
     <Copyright>Filip Liwiński</Copyright>
     <PackageProjectUrl>https://github.com/filipliwinski/SimpleConsoleProgress</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/filipliwinski/SimpleConsoleProgress/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>console, progress, progressbar</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
