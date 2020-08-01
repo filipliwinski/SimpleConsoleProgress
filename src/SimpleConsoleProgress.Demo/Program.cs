@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace ConsoleProgress.Demo
+namespace SimpleConsoleProgress.Demo
 {
     class Program
     {
@@ -9,7 +9,7 @@ namespace ConsoleProgress.Demo
         {
             var total = 20;
 
-            Console.WriteLine("ConsoleProgress Demo");
+            Console.WriteLine("SimpleConsoleProgress Demo");
 
             Console.WriteLine("ProgressBar.Write():");
             for (int i = 0; i < total; i++)

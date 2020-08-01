@@ -19,12 +19,12 @@ steps:
       displayName: "Build for $(buildConfiguration)"
       inputs:
         command: 'build'
-        projects: '**/ConsoleProgress.csproj'
+        projects: '**/SimpleConsoleProgress.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
     - task: PublishBuildArtifacts@1
       displayName: "Upload Artifacts"
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        artifactName: 'ConsoleProgress'
+        artifactName: 'SimpleConsoleProgress'
     

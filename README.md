@@ -1,9 +1,10 @@
-# ConsoleProgress
-Simple progress indicator for console .NET projects.
+# SimpleConsoleProgress
+Simple progress indicator for .NET console projects.
 
 [![Build Status](https://filipliwinski.visualstudio.com/ConsoleProgress/_apis/build/status/ConsoleProgress?branchName=master)](https://filipliwinski.visualstudio.com/ConsoleProgress/_build/latest?definitionId=1&branchName=master)
 
 ## How to use
+    using SimpleConsoleProgress;
 
     Console.WriteLine("ProgressBar.Write():");
     for (int i = 0; i < total; i++)
@@ -19,4 +20,4 @@ Simple progress indicator for console .NET projects.
         ProgressBar.WriteLine(i, total);
     }
 
-<img src="/assets/img/progressbar.gif?raw=true"/>
+<img src="./assets/img/progressbar.gif?raw=true"/>

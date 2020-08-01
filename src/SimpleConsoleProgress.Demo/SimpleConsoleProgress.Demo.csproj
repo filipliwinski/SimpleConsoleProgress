@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleProgress\ConsoleProgress.csproj" />
+    <ProjectReference Include="..\SimpleConsoleProgress\SimpleConsoleProgress.csproj" />
   </ItemGroup>
 
 </Project>

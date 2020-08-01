@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConsoleProgress
+namespace SimpleConsoleProgress
 {
     public static class ProgressBar
     {
