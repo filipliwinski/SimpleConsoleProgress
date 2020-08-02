@@ -9,20 +9,23 @@ namespace SimpleConsoleProgress
         /// </summary>
         /// <param name="current">Current item number (not the percentage).</param>
         /// <param name="total">Total number of items.</param>
-        /// <param name="length">Length of the progress bar.</param>
+        /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="character">Character to show in the progress bar.</param>
-        /// <param name="autoHide">If true, progress bar is removed after is completed.</param>
-        public static void Write(int current, int total, byte length = 60, char character = '#', bool autoHide = false)
+        /// <param name="autoHide">If true, the progress bar is removed upon completion.</param>
+        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false)
         {
-            Progress(current, total, length, true, character);
-            if (current + 1 == total)
+            if (current + 1 < total)
+            {
+                Console.CursorVisible = false;
+            }
+            Progress(current, total, elapsed, true, character);
+            if (current + 1 >= total)
             {
                 if (autoHide)
                 {
                     // Clear console line
                     Console.SetCursorPosition(0, Console.CursorTop);
-                    if (length < 20) length = 20;
-                    for (int i = 0; i < length + 2; i++)
+                    for (int i = 0; i < Console.WindowWidth; i++)
                     {
                         Console.Write(" ");
                     }
@@ -32,6 +35,7 @@ namespace SimpleConsoleProgress
                 {
                     Console.WriteLine();
                 }
+                Console.CursorVisible = true;
             }
         }
 
@@ -40,16 +44,17 @@ namespace SimpleConsoleProgress
         /// </summary>
         /// <param name="current">Current item number (not the percentage).</param>
         /// <param name="total">Total number of items.</param>
-        /// <param name="length">Length of the progress bar.</param>
+        /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="character">Character to show in the progress bar.</param>
-        public static void WriteLine(int current, int total, byte length = 60, char character = '#')
+        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#')
         {
-            Progress(current, total, length, false, character);
+            Progress(current, total, elapsed, false, character);
         }
 
-        private static void Progress(int current, int total, byte length, bool singleLine, char character)
+        private static void Progress(int current, int total, TimeSpan? elapsed, bool singleLine, char character)
         {
-            if (length < 20) length = 20;
+            // Progress bar length equals console window with - brakets (2) - elapsed string length
+            var length = Console.WindowWidth - 2 - (elapsed.HasValue ? GetElapsedString(elapsed.Value).Length : 0);
             if (total <= 0 || current < 0 || total < current)
             {
                 Console.WriteLine("Unable to write progress bar...");
@@ -74,6 +79,11 @@ namespace SimpleConsoleProgress
 
             progressBar += "]";
 
+            if (elapsed.HasValue)
+            {
+                progressBar += GetElapsedString(elapsed.Value);
+            }
+
             var digits = procent < 10 ? 1 : procent < 100 ? 2 : 3;
             var substringLength = length / 2;
 
@@ -89,6 +99,12 @@ namespace SimpleConsoleProgress
             }
 
             Console.Write(progressBar);
+        }
+
+        private static string GetElapsedString(TimeSpan elapsed)
+        {
+            var format = elapsed.Hours > 0 ? "hh\\:mm\\:ss" : elapsed.Minutes > 0 ? "mm\\:ss" : elapsed.Seconds > 0 ? "mm\\:ss\\.fff" : "ss\\.fff";
+            return $" {elapsed.ToString(format)}";
         }
     }
 }
