@@ -18,7 +18,8 @@ namespace SimpleConsoleProgress
             {
                 Console.CursorVisible = false;
             }
-            Progress(current, total, elapsed, true, character);
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(Progress(current, total, elapsed, character));
             if (current + 1 >= total)
             {
                 if (autoHide)
@@ -48,17 +49,24 @@ namespace SimpleConsoleProgress
         /// <param name="character">Character to show in the progress bar.</param>
         public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#')
         {
-            Progress(current, total, elapsed, false, character);
+            Console.WriteLine(Progress(current, total, elapsed, character));
         }
 
-        private static void Progress(int current, int total, TimeSpan? elapsed, bool singleLine, char character)
+        private static string Progress(int current, int total, TimeSpan? elapsed, char character)
         {
             // Progress bar length equals console window with - brakets (2) - elapsed string length
             var length = Console.WindowWidth - 2 - (elapsed.HasValue ? GetElapsedString(elapsed.Value).Length : 0);
-            if (total <= 0 || current < 0 || total < current)
+            if (total <= 0)
             {
-                Console.WriteLine("Unable to write progress bar...");
-                return;
+                throw new ArgumentException("Unable to write progress bar. Total below zero.");
+            }
+            if (current < 0)
+            {
+                throw new ArgumentException("Unable to write progress bar. Current below zero.");
+            }
+            if (total < current)
+            {
+                throw new ArgumentException("Unable to write progress bar. Total less than current.");
             }
 
             var procent = (current + 1) * 100 / total;
@@ -87,18 +95,7 @@ namespace SimpleConsoleProgress
             var digits = procent < 10 ? 1 : procent < 100 ? 2 : 3;
             var substringLength = length / 2;
 
-            progressBar = progressBar.Substring(0, substringLength - digits) + procent + "%" + progressBar.Substring(substringLength + 3);
-
-            if (singleLine)
-            {
-                Console.SetCursorPosition(0, Console.CursorTop);
-            }
-            else
-            {
-                progressBar += "\n";
-            }
-
-            Console.Write(progressBar);
+            return progressBar.Substring(0, substringLength - digits) + procent + "%" + progressBar.Substring(substringLength + 3);
         }
 
         private static string GetElapsedString(TimeSpan elapsed)
