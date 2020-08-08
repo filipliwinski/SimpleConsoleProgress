@@ -5,7 +5,7 @@ namespace SimpleConsoleProgress
     public static class ProgressBar
     {
         /// <summary>
-        /// Writes the specified value to the standard output stream as a progress bar.
+        /// Writes the progress bar to the standard output stream.
         /// </summary>
         /// <param name="current">Current item number (not the percentage).</param>
         /// <param name="total">Total number of items.</param>
@@ -19,7 +19,7 @@ namespace SimpleConsoleProgress
                 Console.CursorVisible = false;
             }
             Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(Progress(current, total, elapsed, character));
+            Console.Write(GetProgress(current, total, elapsed, character));
             if (current + 1 >= total)
             {
                 if (autoHide)
@@ -41,7 +41,7 @@ namespace SimpleConsoleProgress
         }
 
         /// <summary>
-        /// Writes the specified value, followed by the current line terminator, to the standard output stream as a progress bar.
+        /// Writes the progress bar, followed by the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="current">Current item number (not the percentage).</param>
         /// <param name="total">Total number of items.</param>
@@ -49,13 +49,13 @@ namespace SimpleConsoleProgress
         /// <param name="character">Character to show in the progress bar.</param>
         public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#')
         {
-            Console.WriteLine(Progress(current, total, elapsed, character));
+            Console.WriteLine(GetProgress(current, total, elapsed, character));
         }
 
-        private static string Progress(int current, int total, TimeSpan? elapsed, char character)
+        private static string GetProgress(int current, int total, TimeSpan? elapsed, char character)
         {
             // Progress bar length equals console window with - brakets (2) - elapsed string length
-            var length = Console.WindowWidth - 2 - (elapsed.HasValue ? GetElapsedString(elapsed.Value).Length : 0);
+            var length = Console.WindowWidth - 2 - (elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0);
             if (total <= 0)
             {
                 throw new ArgumentException("Unable to write progress bar. Total below zero.");
@@ -89,19 +89,13 @@ namespace SimpleConsoleProgress
 
             if (elapsed.HasValue)
             {
-                progressBar += GetElapsedString(elapsed.Value);
+                progressBar += ProgressHelper.GetElapsedString(elapsed.Value);
             }
 
             var digits = procent < 10 ? 1 : procent < 100 ? 2 : 3;
             var substringLength = length / 2;
 
             return progressBar.Substring(0, substringLength - digits) + procent + "%" + progressBar.Substring(substringLength + 3);
-        }
-
-        private static string GetElapsedString(TimeSpan elapsed)
-        {
-            var format = elapsed.Hours > 0 ? "hh\\:mm\\:ss" : elapsed.Minutes > 0 ? "mm\\:ss" : elapsed.Seconds > 0 ? "mm\\:ss\\.fff" : "ss\\.fff";
-            return $" {elapsed.ToString(format)}";
         }
     }
 }
