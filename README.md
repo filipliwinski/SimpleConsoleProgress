@@ -60,9 +60,6 @@ By default, '#' is used as a progress indicator. You can change it with any char
     var total = 20;
     for (int i = 0; i < total; i++)
     {
-        ProgressBar.WriteLine(i, total);
-        ProgressBar.WriteLine(i, total, null, 'o');
-        ProgressBar.WriteLine(i, total, null, '_');
         ProgressBar.WriteLine(i, total, null, '>');
     }
 
