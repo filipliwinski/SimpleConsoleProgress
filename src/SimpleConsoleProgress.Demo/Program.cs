@@ -13,14 +13,21 @@ namespace SimpleConsoleProgress.Demo
 
             Console.WriteLine("SimpleConsoleProgress Demo");
 
-            Console.WriteLine("ProgressBar.Write():");
+            Console.WriteLine("\nSingle-line progress bar\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
                 ProgressBar.Write(i, total);
             }
 
-            Console.WriteLine("ProgressBar.Write() with timer:");
+            Console.WriteLine("\nMultiline progress bar\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+                ProgressBar.WriteLine(i, total);
+            }
+
+            Console.WriteLine("\nShow elapsed time\n");
             timer.Start();
             for (int i = 0; i < total; i++)
             {
@@ -28,13 +35,20 @@ namespace SimpleConsoleProgress.Demo
                 ProgressBar.Write(i, total, timer.Elapsed);
             }
 
-            Console.WriteLine("ProgressBar.WriteLine():");
-            timer.Reset();
+            Console.WriteLine("\nCustomize progress indicator\n");
             timer.Start();
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
-                ProgressBar.WriteLine(i, total, timer.Elapsed);
+                ProgressBar.Write(i, total, null, '>');
+            }
+
+            Console.WriteLine("\nAutohide progress bar (single-line)\n");
+            timer.Start();
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+                ProgressBar.Write(i, total, null, '#', true);
             }
         }
     }
