@@ -14,7 +14,7 @@ Download from [NuGet](https://www.nuget.org/packages/SimpleConsoleProgress/).
 
 Progress bar is updating in a single line. Use it if the progress is the only output in the process.
 
-<img src="./assets/img/singleline.gif?raw=true"/>
+<img src="./assets/img/singleLine.gif?raw=true"/>
 
     var total = 20;
     for (int i = 0; i < total; i++)
