@@ -56,18 +56,8 @@ namespace SimpleConsoleProgress
         {
             // Progress bar length equals console window with - brakets (2) - elapsed string length
             var length = Console.WindowWidth - 2 - (elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0);
-            if (total <= 0)
-            {
-                throw new ArgumentException("Unable to write progress bar. Total below zero.");
-            }
-            if (current < 0)
-            {
-                throw new ArgumentException("Unable to write progress bar. Current below zero.");
-            }
-            if (total < current)
-            {
-                throw new ArgumentException("Unable to write progress bar. Total less than current.");
-            }
+
+            ProgressHelper.ValidateInputs(current, total);
 
             var procent = (current + 1) * 100 / total;
             var progressBar = "[";

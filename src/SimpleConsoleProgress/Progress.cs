@@ -52,18 +52,7 @@ namespace SimpleConsoleProgress
 
         private static string GetProgress(int current, int total, TimeSpan? elapsed)
         {
-            if (total <= 0)
-            {
-                throw new ArgumentException("Unable to write progress. Total below zero.");
-            }
-            if (current < 0)
-            {
-                throw new ArgumentException("Unable to write progress. Current below zero.");
-            }
-            if (total < current)
-            {
-                throw new ArgumentException("Unable to write progress. Total less than current.");
-            }
+            ProgressHelper.ValidateInputs(current, total);
 
             var procent = (current + 1) * 100 / total;
 
