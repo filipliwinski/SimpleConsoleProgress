@@ -21,6 +21,7 @@ Progress bar is updating in a single line. Use it if the progress is the only ou
     {
         ProgressBar.Write(i, total);
     }
+    Console.WriteLine("Process completed.");
 
 ### Multiline progress bar
 
@@ -33,6 +34,7 @@ Each progress update is written on a new line.
     {
         ProgressBar.WriteLine(i, total);
     }
+    Console.WriteLine("Process completed.");
 
 ### Options
 
@@ -50,6 +52,7 @@ You can provide a `TimeSpan` object with the time to show next to the progress b
     {
         ProgressBar.Write(i, total, timer.Elapsed);
     }
+    Console.WriteLine("Process completed.");
 
 #### Customize progress indicator
 
@@ -62,6 +65,7 @@ By default, '#' is used as a progress indicator. You can change it with any char
     {
         ProgressBar.WriteLine(i, total, null, '>');
     }
+    Console.WriteLine("Process completed.");
 
 #### Auto hide progress bar (single-line)
 
@@ -74,3 +78,4 @@ By default, single-line progress bar persists in the output. You can hide it whe
     {
         ProgressBar.WriteLine(i, total, null, '#', true);
     }
+    Console.WriteLine("Process completed.");
