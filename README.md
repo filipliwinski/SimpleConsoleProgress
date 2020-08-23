@@ -47,14 +47,13 @@ You can provide a `TimeSpan` object with the time to show next to the progress b
     var total = 20;
     var timer = new Stopwatch();
     timer.Start();
-
     for (int i = 0; i < total; i++)
     {
         ProgressBar.Write(i, total, timer.Elapsed);
     }
     Console.WriteLine("Process completed.");
 
-#### Customize progress indicator
+#### Custom progress indicator
 
 By default, '#' is used as a progress indicator. You can change it with any character you want.
 
@@ -63,11 +62,11 @@ By default, '#' is used as a progress indicator. You can change it with any char
     var total = 20;
     for (int i = 0; i < total; i++)
     {
-        ProgressBar.WriteLine(i, total, null, '>');
+        ProgressBar.Write(i, total, character: '>');
     }
     Console.WriteLine("Process completed.");
 
-#### Auto hide progress bar (single-line)
+#### Autohide progress bar (single-line)
 
 By default, single-line progress bar persists in the output. You can hide it when it completes.
 
@@ -76,6 +75,6 @@ By default, single-line progress bar persists in the output. You can hide it whe
     var total = 20;
     for (int i = 0; i < total; i++)
     {
-        ProgressBar.WriteLine(i, total, null, '#', true);
+        ProgressBar.Write(i, total, autoHide: true);
     }
     Console.WriteLine("Process completed.");

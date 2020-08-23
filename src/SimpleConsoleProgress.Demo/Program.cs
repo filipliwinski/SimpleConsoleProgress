@@ -19,6 +19,7 @@ namespace SimpleConsoleProgress.Demo
                 Task.Delay(40).Wait();
                 ProgressBar.Write(i, total);
             }
+            Console.WriteLine("Process completed.");
 
             Console.WriteLine("\nMultiline progress bar\n");
             for (int i = 0; i < total; i++)
@@ -26,6 +27,7 @@ namespace SimpleConsoleProgress.Demo
                 Task.Delay(40).Wait();
                 ProgressBar.WriteLine(i, total);
             }
+            Console.WriteLine("Process completed.");
 
             Console.WriteLine("\nShow elapsed time\n");
             timer.Start();
@@ -34,22 +36,24 @@ namespace SimpleConsoleProgress.Demo
                 Task.Delay(40).Wait();
                 ProgressBar.Write(i, total, timer.Elapsed);
             }
+            Console.WriteLine("Process completed.");
+            timer.Reset();
 
-            Console.WriteLine("\nCustomize progress indicator\n");
-            timer.Start();
+            Console.WriteLine("\nCustom progress indicator\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
-                ProgressBar.Write(i, total, null, '>');
+                ProgressBar.Write(i, total, character: '>');
             }
+            Console.WriteLine("Process completed.");
 
             Console.WriteLine("\nAutohide progress bar (single-line)\n");
-            timer.Start();
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
-                ProgressBar.Write(i, total, null, '#', true);
+                ProgressBar.Write(i, total, autoHide: true);
             }
+            Console.WriteLine("Process completed.");
         }
     }
 }
