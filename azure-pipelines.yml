@@ -22,6 +22,12 @@ steps:
         projects: '**/SimpleConsoleProgress.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
+    - task: DotNetCoreCLI@2
+      displayName: "Run unit tests"
+      inputs:
+        command: 'test'
+        projects: '**/SimpleConsoleProgress.Tests.csproj'
+
     - task: CopyFiles@2
       displayName: "Copy files to $(Build.ArtifactStagingDirectory)"
       inputs:
