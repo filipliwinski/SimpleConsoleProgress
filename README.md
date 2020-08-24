@@ -4,6 +4,8 @@ Simple progress indicator for .NET console projects.
 
 [![Build Status](https://filipliwinski.visualstudio.com/SimpleConsoleProgress/_apis/build/status/SimpleConsoleProgress?branchName=master)](https://filipliwinski.visualstudio.com/SimpleConsoleProgress/_build/latest?definitionId=2&branchName=master)
 
+Support for .NET Framework and .NET Core.
+
 Download from [NuGet](https://www.nuget.org/packages/SimpleConsoleProgress/).
 
 ## How to use
