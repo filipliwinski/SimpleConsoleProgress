@@ -8,6 +8,9 @@ Support for .NET Framework and .NET Core.
 
 Download from [NuGet](https://www.nuget.org/packages/SimpleConsoleProgress/).
 
+[![NuGet](https://img.shields.io/nuget/v/SimpleConsoleProgress.svg)](https://www.nuget.org/packages/SimpleConsoleProgress/)
+[![NuGet](https://img.shields.io/nuget/dt/SimpleConsoleProgress.svg)](https://www.nuget.org/packages/SimpleConsoleProgress/) 
+
 ## How to use
 
     using SimpleConsoleProgress;
