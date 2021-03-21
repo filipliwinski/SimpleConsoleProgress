@@ -25,6 +25,9 @@ using System;
 
 namespace SimpleConsoleProgress
 {
+    /// <summary>
+    /// Allows to write the progress bar to the standard output stream.
+    /// </summary>
     public static class ProgressBar
     {
         /// <summary>
