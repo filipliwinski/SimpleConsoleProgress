@@ -77,6 +77,33 @@ namespace SimpleConsoleProgress.Demo
                 ProgressBar.Write(i, total, autoHide: true);
             }
             Console.WriteLine("Process completed.");
+
+            Console.WriteLine("\nPercent location - left\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+                
+                ProgressBar.Write(i, total, location: PercentLocation.Left);
+            }
+            Console.WriteLine("Process completed.");
+
+            Console.WriteLine("\nPercent location - right\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+
+                ProgressBar.Write(i, total, location: PercentLocation.Right);
+            }
+            Console.WriteLine("Process completed.");
+
+            Console.WriteLine("\nPercent location - none\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+
+                ProgressBar.Write(i, total, location: PercentLocation.None);
+            }
+            Console.WriteLine("Process completed.");
         }
     }
 }

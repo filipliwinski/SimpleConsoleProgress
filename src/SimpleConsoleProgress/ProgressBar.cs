@@ -25,6 +25,14 @@ using System;
 
 namespace SimpleConsoleProgress
 {
+    public enum PercentLocation
+    {
+        None,
+        Left,
+        Middle,
+        Right
+    }
+
     /// <summary>
     /// Allows to write the progress bar to the standard output stream.
     /// </summary>
@@ -38,14 +46,15 @@ namespace SimpleConsoleProgress
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="character">Character to show in the progress bar.</param>
         /// <param name="autoHide">If true, the progress bar is removed upon completion.</param>
-        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false)
+        /// <param name="location">Specifies the position of the percentage.</param>
+        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false, PercentLocation location = PercentLocation.Middle)
         {
             if (current + 1 < total)
             {
                 Console.CursorVisible = false;
             }
             Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(GetProgress(current, total, elapsed, character));
+            Console.Write(GetProgress(current, total, elapsed, character, location));
             if (current + 1 >= total)
             {
                 if (autoHide)
@@ -73,19 +82,26 @@ namespace SimpleConsoleProgress
         /// <param name="total">Total number of items.</param>
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="character">Character to show in the progress bar.</param>
-        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#')
+        /// <param name="location">Specifies the position of the percentage.</param>
+        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle)
         {
-            Console.WriteLine(GetProgress(current, total, elapsed, character));
+            Console.WriteLine(GetProgress(current, total, elapsed, character, location));
         }
 
-        private static string GetProgress(int current, int total, TimeSpan? elapsed, char character)
+        private static string GetProgress(int current, int total, TimeSpan? elapsed, char character, PercentLocation location)
         {
             var barLength = Console.WindowWidth - 2 - (elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0);
+
+            if (location == PercentLocation.Left || location == PercentLocation.Right)
+            {
+                // This will shorten the bar to fit the progress outside.
+                barLength -= 5;
+            }
 
             ProgressHelper.ValidateInputs(current, total);
 
             var percent = (current + 1) * 100 / total;
-            var progressBar = "[";
+            var progressBar = location == PercentLocation.Left ? $"{percent,3}% [" : "[";
 
             for (byte i = 0; i < barLength; i++)
             {
@@ -100,7 +116,7 @@ namespace SimpleConsoleProgress
                 }
             }
 
-            progressBar += "]";
+            progressBar += location == PercentLocation.Right ? $"] {percent}%" : "]";
 
             if (elapsed.HasValue)
             {
@@ -110,7 +126,12 @@ namespace SimpleConsoleProgress
             var digits = percent < 10 ? 1 : percent < 100 ? 2 : 3;
             var substringLength = barLength / 2;
 
-            return progressBar.Substring(0, substringLength - digits) + percent + "%" + progressBar.Substring(substringLength + 3);
+            if (location == PercentLocation.Middle)
+            {
+                return progressBar.Substring(0, substringLength - digits) + percent + "%" + progressBar.Substring(substringLength + 3);
+            }
+
+            return progressBar;
         }
     }
 }
