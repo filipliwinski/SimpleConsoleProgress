@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //  
 //  Copyright (c) 2020-2021 Filip Liwiński
 //  
@@ -80,18 +80,17 @@ namespace SimpleConsoleProgress
 
         private static string GetProgress(int current, int total, TimeSpan? elapsed, char character)
         {
-            // Progress bar length equals console window with - brakets (2) - elapsed string length
-            var length = Console.WindowWidth - 2 - (elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0);
+            var barLength = Console.WindowWidth - 2 - (elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0);
 
             ProgressHelper.ValidateInputs(current, total);
 
-            var procent = (current + 1) * 100 / total;
+            var percent = (current + 1) * 100 / total;
             var progressBar = "[";
 
-            for (byte i = 0; i < length; i++)
+            for (byte i = 0; i < barLength; i++)
             {
-                var position = (decimal)length * procent / 100 - 1;
-                if (procent > 0 && i <= position)
+                var position = (decimal)barLength * percent / 100 - 1;
+                if (percent > 0 && i <= position)
                 {
                     progressBar += character;
                 }
@@ -108,10 +107,10 @@ namespace SimpleConsoleProgress
                 progressBar += ProgressHelper.GetElapsedString(elapsed.Value);
             }
 
-            var digits = procent < 10 ? 1 : procent < 100 ? 2 : 3;
-            var substringLength = length / 2;
+            var digits = percent < 10 ? 1 : percent < 100 ? 2 : 3;
+            var substringLength = barLength / 2;
 
-            return progressBar.Substring(0, substringLength - digits) + procent + "%" + progressBar.Substring(substringLength + 3);
+            return progressBar.Substring(0, substringLength - digits) + percent + "%" + progressBar.Substring(substringLength + 3);
         }
     }
 }
