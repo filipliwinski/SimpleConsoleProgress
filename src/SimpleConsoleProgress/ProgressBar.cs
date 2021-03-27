@@ -88,24 +88,84 @@ namespace SimpleConsoleProgress
             Console.WriteLine(GetProgress(current, total, elapsed, character, location));
         }
 
-        private static string GetProgress(int current, int total, TimeSpan? elapsed, char character, PercentLocation location)
+        private static string GetProgress(int current, int total, TimeSpan? elapsed, char character, PercentLocation location, byte accuracy = 0)
         {
-            var barLength = Console.WindowWidth - 2 - (elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0);
+            if (accuracy > 3)
+            {
+                accuracy = 3;
+            }
+
+            var barLength = Console.WindowWidth;
+
+            barLength -= elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0; // elapsed time
+
+            barLength -= 2; // brackets []
+
+            if (accuracy > 0)
+            {
+                barLength -= accuracy - 1; // decimal points
+            }
 
             if (location == PercentLocation.Left || location == PercentLocation.Right)
             {
                 // This will shorten the bar to fit the progress outside.
-                barLength -= 5;
+                barLength -= 5 + accuracy;
             }
 
             ProgressHelper.ValidateInputs(current, total);
 
-            var percent = (current + 1) * 100 / total;
-            var progressBar = location == PercentLocation.Left ? $"{percent,3}% [" : "[";
+            decimal percent = (current + 1) * 100 / total;
+            string percentString;
+
+            switch (location)
+            {
+                case PercentLocation.Left:
+                    if (accuracy == 0)
+                    {
+                        percentString = $"{percent,3:0}";
+                    }
+                    else if (accuracy == 1)
+                    {
+                        percentString = $"{percent,5:0.0}";
+                    }
+                    else if (accuracy == 2)
+                    {
+                        percentString = $"{percent,6:0.00}";
+                    }
+                    else
+                    {
+                        percentString = $"{percent,7:0.000}";
+                    }
+                    break;
+                case PercentLocation.Middle:
+                case PercentLocation.Right:
+                    if (accuracy == 0)
+                    {
+                        percentString = $"{percent:0}";
+                    }
+                    else if (accuracy == 1)
+                    {
+                        percentString = $"{percent:0.0}";
+                    }
+                    else if (accuracy == 2)
+                    {
+                        percentString = $"{percent:0.00}";
+                    }
+                    else
+                    {
+                        percentString = $"{percent:0.000}";
+                    }
+                    break;
+                default:
+                    percentString = "";
+                    break;
+            }
+
+            var progressBar = location == PercentLocation.Left ? $"{percentString}% [" : "[";
 
             for (byte i = 0; i < barLength; i++)
             {
-                var position = (decimal)barLength * percent / 100 - 1;
+                var position = barLength * percent / 100 - 1;
                 if (percent > 0 && i <= position)
                 {
                     progressBar += character;
@@ -116,19 +176,19 @@ namespace SimpleConsoleProgress
                 }
             }
 
-            progressBar += location == PercentLocation.Right ? $"] {percent}%" : "]";
+            progressBar += location == PercentLocation.Right ? $"] {percentString}%" : "]";
 
             if (elapsed.HasValue)
             {
                 progressBar += ProgressHelper.GetElapsedString(elapsed.Value);
             }
 
-            var digits = percent < 10 ? 1 : percent < 100 ? 2 : 3;
-            var substringLength = barLength / 2;
-
             if (location == PercentLocation.Middle)
             {
-                return progressBar.Substring(0, substringLength - digits) + percent + "%" + progressBar.Substring(substringLength + 3);
+                var digits = percent < 10 ? 1 : percent < 100 ? 2 : 3;
+                var substringLength = barLength / 2;
+
+                return progressBar.Substring(0, substringLength - digits) + percentString + "%" + progressBar.Substring(substringLength + 3);
             }
 
             return progressBar;
