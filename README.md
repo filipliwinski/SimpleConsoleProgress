@@ -83,3 +83,34 @@ By default, single-line progress bar persists in the output. You can hide it whe
         ProgressBar.Write(i, total, autoHide: true);
     }
     Console.WriteLine("Process completed.");
+
+#### Percent value location
+
+The current percentage is displayed by default in the middle of the progress bar. It can be on the left / right side of the progress bar or it can be hidden.
+
+<img src="./assets/img/location-left.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, location: PercentLocation.Left);
+    }
+    Console.WriteLine("Process completed.");
+
+<img src="./assets/img/location-right.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, location: PercentLocation.Right);
+    }
+    Console.WriteLine("Process completed.");
+
+<img src="./assets/img/location-none.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, location: PercentLocation.None);
+    }
+    Console.WriteLine("Process completed.");
