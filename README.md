@@ -114,3 +114,34 @@ The current percentage is displayed by default in the middle of the progress bar
         ProgressBar.Write(i, total, location: PercentLocation.None);
     }
     Console.WriteLine("Process completed.");
+
+#### Accuracy
+
+By default, integer values are displayed. You can increase the accuracy to three decimal places.
+
+<img src="./assets/img/accuracy-1.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, accuracy: 1);
+    }
+    Console.WriteLine("Process completed.");
+
+<img src="./assets/img/accuracy-2.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, accuracy: 2);
+    }
+    Console.WriteLine("Process completed.");
+
+<img src="./assets/img/accuracy-3.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, accuracy: 3);
+    }
+    Console.WriteLine("Process completed.");

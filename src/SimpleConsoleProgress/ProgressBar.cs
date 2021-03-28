@@ -113,7 +113,7 @@ namespace SimpleConsoleProgress
 
                 if (accuracy > 0)
                 {
-                    barLength -= accuracy + 1;  // decimal points
+                    barLength -= accuracy + 1;  // decimal points + delimiter
                 }
             }
 
