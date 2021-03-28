@@ -1,10 +1,11 @@
 # SimpleConsoleProgress
 
-Simple progress indicator for .NET console projects.
+Free and open-source library with a simple progress indicator for .NET console projects.
 
 [![Build Status](https://filipliwinski.visualstudio.com/SimpleConsoleProgress/_apis/build/status/SimpleConsoleProgress?branchName=master)](https://filipliwinski.visualstudio.com/SimpleConsoleProgress/_build/latest?definitionId=2&branchName=master)
+[![CodeQL](https://github.com/filipliwinski/SimpleConsoleProgress/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/filipliwinski/SimpleConsoleProgress/actions/workflows/codeql-analysis.yml)
 
-Support for .NET Framework and .NET Core.
+Support for .NET Framework (4.5+), .NET Core and .NET 5.
 
 Download from [NuGet](https://www.nuget.org/packages/SimpleConsoleProgress/).
 
