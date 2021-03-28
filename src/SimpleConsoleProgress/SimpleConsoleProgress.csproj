@@ -4,7 +4,7 @@
     <AssemblyName>SimpleConsoleProgress</AssemblyName>
     <Authors>Filip Liwiński</Authors>
     <Copyright>Filip Liwiński</Copyright>
-    <Description>Simple progress indicator for .NET console projects.</Description>
+    <Description>Free and open-source library with a simple progress indicator for .NET console projects.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>images\icon.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/filipliwinski/SimpleConsoleProgress/master/assets/img/icon.png</PackageIconUrl>
@@ -13,7 +13,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>simple, console, progress, progressbar</PackageTags>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <Version>1.1.1</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
