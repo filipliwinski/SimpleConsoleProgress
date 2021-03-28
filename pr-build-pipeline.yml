@@ -1,7 +1,8 @@
-trigger:
-- master
+trigger: none
 
-pr: none
+pr:
+- master
+- develop
 
 pool:
   vmImage: 'windows-2019'
@@ -29,18 +30,3 @@ steps:
       inputs:
         command: 'test'
         projects: '**/SimpleConsoleProgress.Tests.csproj'
-
-    - task: CopyFiles@2
-      displayName: "Copy files to $(Build.ArtifactStagingDirectory)"
-      inputs:
-        sourceFolder: '$(Build.SourcesDirectory)'
-        contents: '**/bin/$(buildConfiguration)/**/?(*.exe|*.dll|*.pdb|*.nupkg)'
-        targetFolder: '$(Build.ArtifactStagingDirectory)'
-        flattenFolders: true
-
-    - task: PublishBuildArtifacts@1
-      displayName: "Publish Artifacts"
-      inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        artifactName: 'SimpleConsoleProgress'
-    

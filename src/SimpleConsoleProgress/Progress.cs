@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //  
 //  Copyright (c) 2020-2021 Filip Liwiński
 //  
@@ -80,11 +80,11 @@ namespace SimpleConsoleProgress
         {
             ProgressHelper.ValidateInputs(current, total);
 
-            var procent = (current + 1) * 100 / total;
+            var percent = (current + 1) * 100 / total;
 
-            var progress = procent + "%";
+            var progress = percent + "%";
 
-            progress = procent < 10 ? $"  {progress}" : procent < 100 ? $" {progress}" : $"{progress}";
+            progress = percent < 10 ? $"  {progress}" : percent < 100 ? $" {progress}" : $"{progress}";
 
             if (elapsed.HasValue)
             {

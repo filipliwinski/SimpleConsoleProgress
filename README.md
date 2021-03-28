@@ -84,3 +84,77 @@ By default, single-line progress bar persists in the output. You can hide it whe
         ProgressBar.Write(i, total, autoHide: true);
     }
     Console.WriteLine("Process completed.");
+
+#### Percent value location
+
+The current percentage is displayed by default in the middle of the progress bar. It can be on the left / right side of the progress bar or it can be hidden.
+
+##### Location - left
+
+<img src="./assets/img/location-left.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, location: PercentLocation.Left);
+    }
+    Console.WriteLine("Process completed.");
+
+##### Location - right
+
+<img src="./assets/img/location-right.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, location: PercentLocation.Right);
+    }
+    Console.WriteLine("Process completed.");
+
+##### Location - none
+
+<img src="./assets/img/location-none.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, location: PercentLocation.None);
+    }
+    Console.WriteLine("Process completed.");
+
+#### Accuracy
+
+By default, integer values are displayed. You can increase the accuracy to three decimal places.
+
+##### Accuracy - one decimal place 
+
+<img src="./assets/img/accuracy-1.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, accuracy: 1);
+    }
+    Console.WriteLine("Process completed.");
+
+##### Accuracy - two decimal places
+
+<img src="./assets/img/accuracy-2.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, accuracy: 2);
+    }
+    Console.WriteLine("Process completed.");
+
+##### Accuracy - three decimal places
+
+<img src="./assets/img/accuracy-3.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, accuracy: 3);
+    }
+    Console.WriteLine("Process completed.");
