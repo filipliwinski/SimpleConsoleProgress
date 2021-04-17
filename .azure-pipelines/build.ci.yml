@@ -16,6 +16,15 @@ steps:
       inputs:
         version: '3.1.x'
         packageType: sdk
+        
+    - task: SonarCloudPrepare@1
+      displayName: 'Prepare analysis configuration'
+      inputs:
+        SonarCloud: 'SonarCloud'
+        organization: 'filipliwinski-github'
+        scannerMode: 'MSBuild'
+        projectKey: 'filipliwinski_SimpleConsoleProgress'
+        projectName: 'SimpleConsoleProgress'
 
     - task: DotNetCoreCLI@2
       displayName: "Build for $(buildConfiguration)"
@@ -29,6 +38,14 @@ steps:
       inputs:
         command: 'test'
         projects: '**/SimpleConsoleProgress.Tests.csproj'
+        
+    - task: SonarCloudAnalyze@1
+      displayName: 'Run SonarCloud analysis'
+
+    - task: SonarCloudPublish@1
+      displayName: 'Publish results on build summary'
+      inputs:
+        pollingTimeoutSec: '300'
 
     - task: CopyFiles@2
       displayName: "Copy files to $(Build.ArtifactStagingDirectory)"
