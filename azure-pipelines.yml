@@ -20,10 +20,10 @@ steps:
     - task: SonarCloudPrepare@1
       displayName: 'Prepare analysis configuration'
       inputs:
-        SonarCloud: 'SC'
+        SonarCloud: 'SonarCloud'
         organization: 'filipliwinski-github'
         scannerMode: 'MSBuild'
-        projectKey: '$(SonarCloudKey)'
+        projectKey: 'filipliwinski_SimpleConsoleProgress'
         projectName: 'SimpleConsoleProgress'
 
     - task: DotNetCoreCLI@2
