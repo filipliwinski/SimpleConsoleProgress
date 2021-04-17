@@ -7,14 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConsoleProgress", "Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConsoleProgress.Demo", "SimpleConsoleProgress.Demo\SimpleConsoleProgress.Demo.csproj", "{09125199-4D87-4650-90D6-1A71C00CF937}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90D5DF03-E357-4518-9987-2E034497E5E8}"
-	ProjectSection(SolutionItems) = preProject
-		..\.editorconfig = ..\.editorconfig
-		..\azure-pipelines.yml = ..\azure-pipelines.yml
-		..\pr-build-pipeline.yml = ..\pr-build-pipeline.yml
-		..\README.md = ..\README.md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConsoleProgress.Tests", "SimpleConsoleProgress.Tests\SimpleConsoleProgress.Tests.csproj", "{26D1E8B6-86CF-4769-A94C-4E76E9BB8751}"
 EndProject
 Global

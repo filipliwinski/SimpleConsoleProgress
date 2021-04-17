@@ -37,21 +37,49 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
         }
 
         [Fact]
-        public void WhenElapsedTimeProvided_ThenProgressBarLengthEqualsSpecified()
+        public void WhenElapsedTimeProvidedInSeconds_ThenProgressBarLengthEqualsSpecified()
         {
             var barLength = 120;
             var elapsed = new TimeSpan(0, 0, 1);
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, elapsed: elapsed);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, elapsed: elapsed);
+
+                Assert.Equal(barLength, progressBar.Length);
+            }
+        }
+
+        [Fact]
+        public void WhenElapsedTimeProvidedInMinutes_ThenProgressBarLengthEqualsSpecified()
+        {
+            var barLength = 120;
+            var elapsed = new TimeSpan(0, 3, 10);
+
+            for (int i = 0; i < total; i++)
+            {
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, elapsed: elapsed);
+
+                Assert.Equal(barLength, progressBar.Length);
+            }
+        }
+
+        [Fact]
+        public void WhenElapsedTimeProvidedInHours_ThenProgressBarLengthEqualsSpecified()
+        {
+            var barLength = 120;
+            var elapsed = new TimeSpan(2, 3, 10);
+
+            for (int i = 0; i < total; i++)
+            {
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, elapsed: elapsed);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
@@ -65,7 +93,7 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, location: location);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, location: location);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
@@ -79,7 +107,7 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, location: location);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, location: location);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
@@ -93,7 +121,7 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, location: location);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, location: location);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
@@ -107,7 +135,7 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, accuracy: accuracy);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, accuracy: accuracy);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
@@ -121,7 +149,7 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, accuracy: accuracy);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, accuracy: accuracy);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
@@ -135,7 +163,7 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, accuracy: accuracy);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, accuracy: accuracy);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
@@ -150,7 +178,7 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, location: location, accuracy: accuracy);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, location: location, accuracy: accuracy);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
@@ -227,7 +255,23 @@ namespace SimpleConsoleProgress.Tests
 
             for (int i = 0; i < total; i++)
             {
-                var progressBar = ProgressBar.GetProgress(0, total, barLength, location: location, accuracy: accuracy);
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, location: location, accuracy: accuracy);
+
+                Assert.Equal(barLength, progressBar.Length);
+            }
+        }
+
+        [Fact]
+        public void WhenElapsedTimeProvidedInSecondsLocationLeftAndAccuracy1_ThenProgressBarLengthEqualsSpecified()
+        {
+            var barLength = 120;
+            var location = PercentLocation.Left;
+            var accuracy = 1;
+            var elapsed = new TimeSpan(0, 0, 1);
+
+            for (int i = 0; i < total; i++)
+            {
+                var progressBar = ProgressBar.GetProgress(i, total, barLength, elapsed: elapsed, location: location, accuracy: accuracy);
 
                 Assert.Equal(barLength, progressBar.Length);
             }
