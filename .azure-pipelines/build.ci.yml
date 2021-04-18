@@ -1,63 +1,19 @@
 trigger:
-- master
+  - master
 
 pr: none
 
 pool:
-  vmImage: 'windows-2019'
+  vmImage: windows-2019
 
-variables:
-  buildConfiguration: 'Release'
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: GitHub.Public/YAML.Templates
 
 steps:
-
-    - task: UseDotNet@2 
-      displayName: "Use .NET Core 3.1.x"
-      inputs:
-        version: '3.1.x'
-        packageType: sdk
-        
-    - task: SonarCloudPrepare@1
-      displayName: 'Prepare analysis configuration'
-      inputs:
-        SonarCloud: 'SonarCloud'
-        organization: 'filipliwinski-github'
-        scannerMode: 'MSBuild'
-        projectKey: 'filipliwinski_SimpleConsoleProgress'
-        projectName: 'SimpleConsoleProgress'
-
-    - task: DotNetCoreCLI@2
-      displayName: "Build for $(buildConfiguration)"
-      inputs:
-        command: 'build'
-        projects: '**/SimpleConsoleProgress.csproj'
-        arguments: '--configuration $(buildConfiguration)'
-
-    - task: DotNetCoreCLI@2
-      displayName: "Run unit tests"
-      inputs:
-        command: 'test'
-        projects: '**/SimpleConsoleProgress.Tests.csproj'
-        
-    - task: SonarCloudAnalyze@1
-      displayName: 'Run SonarCloud analysis'
-
-    - task: SonarCloudPublish@1
-      displayName: 'Publish results on build summary'
-      inputs:
-        pollingTimeoutSec: '300'
-
-    - task: CopyFiles@2
-      displayName: "Copy files to $(Build.ArtifactStagingDirectory)"
-      inputs:
-        sourceFolder: '$(Build.SourcesDirectory)'
-        contents: '**/bin/$(buildConfiguration)/**/?(*.exe|*.dll|*.pdb|*.nupkg)'
-        targetFolder: '$(Build.ArtifactStagingDirectory)'
-        flattenFolders: true
-
-    - task: PublishBuildArtifacts@1
-      displayName: "Publish Artifacts"
-      inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        artifactName: 'SimpleConsoleProgress'
-    
+  - template: build.ci.yml@templates
+    parameters:
+      projectName: SimpleConsoleProgress
+      unitTestsProjectName: SimpleConsoleProgress.Tests

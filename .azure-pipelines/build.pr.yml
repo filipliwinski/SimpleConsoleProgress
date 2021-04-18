@@ -5,28 +5,16 @@ pr:
 - develop
 
 pool:
-  vmImage: 'windows-2019'
+  vmImage: windows-2019
 
-variables:
-  buildConfiguration: 'Release'
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: GitHub.Public/YAML.Templates
 
 steps:
-
-    - task: UseDotNet@2 
-      displayName: "Use .NET Core 3.1.x"
-      inputs:
-        version: '3.1.x'
-        packageType: sdk
-
-    - task: DotNetCoreCLI@2
-      displayName: "Build for $(buildConfiguration)"
-      inputs:
-        command: 'build'
-        projects: '**/SimpleConsoleProgress.csproj'
-        arguments: '--configuration $(buildConfiguration)'
-
-    - task: DotNetCoreCLI@2
-      displayName: "Run unit tests"
-      inputs:
-        command: 'test'
-        projects: '**/SimpleConsoleProgress.Tests.csproj'
+  - template: build.pr.yml@templates
+    parameters:
+      projectName: SimpleConsoleProgress
+      unitTestsProjectName: SimpleConsoleProgress.Tests
