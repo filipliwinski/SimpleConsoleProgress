@@ -108,7 +108,7 @@ namespace SimpleConsoleProgress
 
             if (location == PercentLocation.Left || location == PercentLocation.Right)
             {
-                // This will shorten the bar to fit the progress outside.
+                // This will shorten the bar to fit the progress value outside.
                 barLength -= 5;
 
                 if (accuracy > 0)
@@ -119,7 +119,7 @@ namespace SimpleConsoleProgress
 
             ProgressHelper.ValidateInputs(current, total);
 
-            decimal percent = (current + 1) * 100 / total;
+            decimal percent = (current + 1) * 100 / (decimal)total;
             string percentString;
 
             switch (location)
