@@ -26,14 +26,6 @@ using System.Text;
 
 namespace SimpleConsoleProgress
 {
-    public enum PercentLocation
-    {
-        None,
-        Left,
-        Middle,
-        Right
-    }
-
     /// <summary>
     /// Allows to write the progress bar to the standard output stream.
     /// </summary>
@@ -118,56 +110,9 @@ namespace SimpleConsoleProgress
                 }
             }
 
-            //ProgressHelper.ValidateInputs(current, total);
-
             decimal progressValue = ProgressHelper.GetProgressValue(current, total);
             string progressString = ProgressHelper.GetProgressString(progressValue, location, accuracy);
-            //string percentString;
-
-            //switch (location)
-            //{
-            //    case PercentLocation.Left:
-            //    case PercentLocation.Right:
-            //        if (accuracy == 0)
-            //        {
-            //            percentString = $"{percent,3:0}";
-            //        }
-            //        else if (accuracy == 1)
-            //        {
-            //            percentString = $"{percent,5:0.0}";
-            //        }
-            //        else if (accuracy == 2)
-            //        {
-            //            percentString = $"{percent,6:0.00}";
-            //        }
-            //        else
-            //        {
-            //            percentString = $"{percent,7:0.000}";
-            //        }
-            //        break;
-            //    case PercentLocation.Middle:
-            //        if (accuracy == 0)
-            //        {
-            //            percentString = $"{percent:0}";
-            //        }
-            //        else if (accuracy == 1)
-            //        {
-            //            percentString = $"{percent:0.0}";
-            //        }
-            //        else if (accuracy == 2)
-            //        {
-            //            percentString = $"{percent:0.00}";
-            //        }
-            //        else
-            //        {
-            //            percentString = $"{percent:0.000}";
-            //        }
-            //        break;
-            //    default:
-            //        percentString = "";
-            //        break;
-            //}
-
+            
             var progressBuilder = new StringBuilder();
 
             progressBuilder.Append(location == PercentLocation.Left ? $"{progressString} [" : "[");

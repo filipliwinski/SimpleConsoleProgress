@@ -78,8 +78,6 @@ namespace SimpleConsoleProgress
 
         private static string GetProgress(int current, int total, TimeSpan? elapsed, int accuracy)
         {
-            //ProgressHelper.ValidateInputs(current, total);
-
             var progressValue = ProgressHelper.GetProgressValue(current, total);
 
             var progressString = ProgressHelper.GetProgressString(progressValue, PercentLocation.Middle, accuracy);
