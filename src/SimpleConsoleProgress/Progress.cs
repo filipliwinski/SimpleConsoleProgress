@@ -37,13 +37,13 @@ namespace SimpleConsoleProgress
         /// <param name="total">Total number of items.</param>
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="autoHide">If true, the progress is removed upon completion.</param>
-        public static void Write(int current, int total, TimeSpan? elapsed = null, bool autoHide = false)
+        public static void Write(int current, int total, TimeSpan? elapsed = null, bool autoHide = false, int accuracy = 0)
         {
             if (current + 1 < total)
             {
                 Console.CursorVisible = false;
             }
-            var progress = GetProgress(current, total, elapsed);
+            var progress = GetProgress(current, total, elapsed, accuracy);
             Console.Write(progress);
             Console.SetCursorPosition(Console.CursorLeft - progress.Length, Console.CursorTop);
             if (current + 1 >= total)
@@ -71,27 +71,27 @@ namespace SimpleConsoleProgress
         /// <param name="current">Current item number (not the percentage).</param>
         /// <param name="total">Total number of items.</param>
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
-        public static void WriteLine(int current, int total, TimeSpan? elapsed = null)
+        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, int accuracy = 0)
         {
-            Console.WriteLine(GetProgress(current, total, elapsed));
+            Console.WriteLine(GetProgress(current, total, elapsed, accuracy));
         }
 
-        private static string GetProgress(int current, int total, TimeSpan? elapsed)
+        private static string GetProgress(int current, int total, TimeSpan? elapsed, int accuracy)
         {
-            ProgressHelper.ValidateInputs(current, total);
+            //ProgressHelper.ValidateInputs(current, total);
 
-            var percent = (current + 1) * 100 / total;
+            var progressValue = ProgressHelper.GetProgressValue(current, total);
 
-            var progress = percent + "%";
+            var progressString = ProgressHelper.GetProgressString(progressValue, PercentLocation.Middle, accuracy);
 
-            progress = percent < 10 ? $"  {progress}" : percent < 100 ? $" {progress}" : $"{progress}";
+            progressString = progressValue < 10 ? $"  {progressString}" : progressValue < 100 ? $" {progressString}" : $"{progressString}";
 
             if (elapsed.HasValue)
             {
-                progress += ProgressHelper.GetElapsedString(elapsed.Value);
+                progressString += ProgressHelper.GetElapsedString(elapsed.Value);
             }
 
-            return progress;
+            return progressString;
         }
     }
 }

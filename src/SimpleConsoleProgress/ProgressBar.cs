@@ -22,6 +22,7 @@
 //
 
 using System;
+using System.Text;
 
 namespace SimpleConsoleProgress
 {
@@ -117,85 +118,95 @@ namespace SimpleConsoleProgress
                 }
             }
 
-            ProgressHelper.ValidateInputs(current, total);
+            //ProgressHelper.ValidateInputs(current, total);
 
-            decimal percent = (current + 1) * 100 / (decimal)total;
-            string percentString;
+            decimal progressValue = ProgressHelper.GetProgressValue(current, total);
+            string progressString = ProgressHelper.GetProgressString(progressValue, location, accuracy);
+            //string percentString;
 
-            switch (location)
-            {
-                case PercentLocation.Left:
-                case PercentLocation.Right:
-                    if (accuracy == 0)
-                    {
-                        percentString = $"{percent,3:0}";
-                    }
-                    else if (accuracy == 1)
-                    {
-                        percentString = $"{percent,5:0.0}";
-                    }
-                    else if (accuracy == 2)
-                    {
-                        percentString = $"{percent,6:0.00}";
-                    }
-                    else
-                    {
-                        percentString = $"{percent,7:0.000}";
-                    }
-                    break;
-                case PercentLocation.Middle:
-                    if (accuracy == 0)
-                    {
-                        percentString = $"{percent:0}";
-                    }
-                    else if (accuracy == 1)
-                    {
-                        percentString = $"{percent:0.0}";
-                    }
-                    else if (accuracy == 2)
-                    {
-                        percentString = $"{percent:0.00}";
-                    }
-                    else
-                    {
-                        percentString = $"{percent:0.000}";
-                    }
-                    break;
-                default:
-                    percentString = "";
-                    break;
-            }
+            //switch (location)
+            //{
+            //    case PercentLocation.Left:
+            //    case PercentLocation.Right:
+            //        if (accuracy == 0)
+            //        {
+            //            percentString = $"{percent,3:0}";
+            //        }
+            //        else if (accuracy == 1)
+            //        {
+            //            percentString = $"{percent,5:0.0}";
+            //        }
+            //        else if (accuracy == 2)
+            //        {
+            //            percentString = $"{percent,6:0.00}";
+            //        }
+            //        else
+            //        {
+            //            percentString = $"{percent,7:0.000}";
+            //        }
+            //        break;
+            //    case PercentLocation.Middle:
+            //        if (accuracy == 0)
+            //        {
+            //            percentString = $"{percent:0}";
+            //        }
+            //        else if (accuracy == 1)
+            //        {
+            //            percentString = $"{percent:0.0}";
+            //        }
+            //        else if (accuracy == 2)
+            //        {
+            //            percentString = $"{percent:0.00}";
+            //        }
+            //        else
+            //        {
+            //            percentString = $"{percent:0.000}";
+            //        }
+            //        break;
+            //    default:
+            //        percentString = "";
+            //        break;
+            //}
 
-            var progressBar = location == PercentLocation.Left ? $"{percentString}% [" : "[";
+            var progressBuilder = new StringBuilder();
+
+            progressBuilder.Append(location == PercentLocation.Left ? $"{progressString} [" : "[");
 
             for (byte i = 0; i < barLength; i++)
             {
-                var position = barLength * percent / 100 - 1;
-                if (percent > 0 && i <= position)
+                var position = barLength * progressValue / 100 - 1;
+                if (progressValue > 0 && i <= position)
                 {
-                    progressBar += character;
+                    progressBuilder.Append(character);
                 }
                 else
                 {
-                    progressBar += " ";
+                    progressBuilder.Append(" ");
                 }
             }
 
-            progressBar += location == PercentLocation.Right ? $"] {percentString}%" : "]";
+            progressBuilder.Append(location == PercentLocation.Right ? $"] {progressString}" : "]");
 
             if (elapsed.HasValue)
             {
-                progressBar += ProgressHelper.GetElapsedString(elapsed.Value);
+                progressBuilder.Append(ProgressHelper.GetElapsedString(elapsed.Value));
             }
+
+            var progressBar = progressBuilder.ToString();
 
             if (location == PercentLocation.Middle)
             {
-                var digits = percent < 10 ? 1 : percent < 100 ? 2 : 3;
+                var digits = 1;
+                if (progressValue >= 10)
+                {
+                    digits = progressValue < 100 ? 2 : 3;
+                }
+
                 var substringLength = progressBar.Length / 2;
 
                 var accuracyLength = accuracy == 0 ? 0 : accuracy + 1;  // include delimiter character
 
-                return progressBar.Substring(0, substringLength - digits) + percentString + "%" + progressBar.Substring(substringLength + 1 + accuracyLength);
+                return progressBar.Substring(0, substringLength - digits) + progressString + progressBar.Substring(substringLength + 1 + accuracyLength);
             }
 
             return progressBar;

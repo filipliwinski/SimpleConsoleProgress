@@ -78,7 +78,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\nPercent location - left\n");
+            Console.WriteLine("\nPercent location: left\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
@@ -87,7 +87,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\nPercent location - right\n");
+            Console.WriteLine("\nPercent location: right\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
@@ -96,7 +96,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\nPercent location - none\n");
+            Console.WriteLine("\nPercent location: none\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
@@ -105,7 +105,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\nAccuracy = 1\n");
+            Console.WriteLine("\nAccuracy: 1\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
@@ -114,7 +114,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\nAccuracy = 2\n");
+            Console.WriteLine("\nAccuracy: 2\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
@@ -123,7 +123,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\nAccuracy = 3\n");
+            Console.WriteLine("\nAccuracy: 3\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
