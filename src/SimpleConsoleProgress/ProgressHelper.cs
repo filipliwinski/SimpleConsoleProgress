@@ -45,7 +45,21 @@ namespace SimpleConsoleProgress
 
         internal static string GetElapsedString(TimeSpan elapsed)
         {
-            var format = elapsed.Hours > 0 ? "hh\\:mm\\:ss" : elapsed.Minutes > 0 ? "mm\\:ss" : elapsed.Seconds > 0 ? "mm\\:ss\\.fff" : "ss\\.fff";
+            var format = "ss\\.fff";
+
+            if (elapsed.Seconds > 0)
+            {
+                format = "mm\\:ss\\.fff";
+            }
+            if (elapsed.Minutes > 0)
+            {
+                format = "mm\\:ss";
+            }
+            if (elapsed.Hours > 0)
+            {
+                format = "hh\\:mm\\:ss";
+            }
+
             return $" {elapsed.ToString(format)}";
         }
 
