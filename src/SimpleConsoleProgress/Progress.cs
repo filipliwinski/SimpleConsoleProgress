@@ -82,15 +82,6 @@ namespace SimpleConsoleProgress
 
             var progressString = ProgressHelper.GetProgressString(progressValue, PercentLocation.Middle, accuracy);
 
-            if (progressValue < 10)
-            {
-                progressString = $"  {progressString}";
-            }
-            else if (progressValue < 100)
-            {
-                progressString = $" {progressString}";
-            }
-
             if (elapsed.HasValue)
             {
                 progressString += ProgressHelper.GetElapsedString(elapsed.Value);

@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 
 namespace SimpleConsoleProgress.Demo
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -49,6 +49,14 @@ namespace SimpleConsoleProgress.Demo
             {
                 Task.Delay(40).Wait();
                 ProgressBar.WriteLine(i, total);
+            }
+            Console.WriteLine("Process completed.");
+
+            Console.WriteLine("\nNo progress bar\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+                Progress.Write(i, total);
             }
             Console.WriteLine("Process completed.");
 
