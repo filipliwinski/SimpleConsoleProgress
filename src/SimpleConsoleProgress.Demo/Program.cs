@@ -90,7 +90,7 @@ namespace SimpleConsoleProgress.Demo
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(40).Wait();
-                
+
                 ProgressBar.Write(i, total, location: PercentLocation.Left);
             }
             Console.WriteLine("Process completed.");
@@ -137,6 +137,42 @@ namespace SimpleConsoleProgress.Demo
                 Task.Delay(40).Wait();
 
                 ProgressBar.Write(i, total, accuracy: 3);
+            }
+            Console.WriteLine("Process completed.");
+
+            Console.WriteLine("Size: Small\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+
+                ProgressBar.WriteLine(i, total, elapsed: timer.Elapsed, size: BarSize.Small);
+            }
+            Console.WriteLine("Process completed.");
+
+            Console.WriteLine("Size: Medium\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+
+                ProgressBar.WriteLine(i, total, elapsed: timer.Elapsed, size: BarSize.Medium);
+            }
+            Console.WriteLine("Process completed.");
+
+            Console.WriteLine("Size: Big\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+
+                ProgressBar.WriteLine(i, total, elapsed: timer.Elapsed, size: BarSize.Big);
+            }
+            Console.WriteLine("Process completed.");
+
+            Console.WriteLine("Size: Full\n");
+            for (int i = 0; i < total; i++)
+            {
+                Task.Delay(40).Wait();
+
+                ProgressBar.WriteLine(i, total, elapsed: timer.Elapsed, size: BarSize.Full);
             }
             Console.WriteLine("Process completed.");
         }

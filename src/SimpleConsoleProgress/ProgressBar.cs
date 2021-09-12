@@ -40,14 +40,14 @@ namespace SimpleConsoleProgress
         /// <param name="character">Character to show in the progress bar.</param>
         /// <param name="autoHide">If true, the progress bar is removed upon completion.</param>
         /// <param name="location">Specifies the position of the percentage.</param>
-        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false, PercentLocation location = PercentLocation.Middle, int accuracy = 0)
+        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false, PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
         {
             if (current + 1 < total)
             {
                 Console.CursorVisible = false;
             }
             Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(GetProgress(current, total, Console.WindowWidth, elapsed, character, location, accuracy));
+            Console.Write(GetProgress(current, total, size, elapsed, character, location, accuracy));
             if (current + 1 >= total)
             {
                 if (autoHide)
@@ -76,15 +76,15 @@ namespace SimpleConsoleProgress
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="character">Character to show in the progress bar.</param>
         /// <param name="location">Specifies the position of the percentage.</param>
-        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = 0)
+        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
         {
-            Console.WriteLine(GetProgress(current, total, Console.WindowWidth, elapsed, character, location, accuracy));
+            Console.WriteLine(GetProgress(current, total, size, elapsed, character, location, accuracy));
         }
 
         internal static string GetProgress(
             int current,
             int total,
-            int barLength,
+            BarSize size = BarSize.Full,
             TimeSpan? elapsed = null,
             char character = '#',
             PercentLocation location = PercentLocation.Middle,
@@ -95,11 +95,32 @@ namespace SimpleConsoleProgress
                 accuracy = 3;
             }
 
-            barLength -= elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0; // elapsed time
+            int barLength;
+            var elapsedLength = elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0;
 
-            barLength -= 2; // brackets []
+            if (size != BarSize.Full && (int)size < GetConsoleWindowWidth())
+            {
+                barLength = (int)size - 2;
 
-            if (location == PercentLocation.Left || location == PercentLocation.Right)
+                //if (barLength + elapsedLength >= GetConsoleWindowWidth())
+                //{
+                //    barLength -= elapsedLength;
+                //}
+            }
+            else
+            {
+                barLength = GetConsoleWindowWidth() - 2; // brackets []
+            }
+
+            // elapsed time
+            if (barLength + elapsedLength >= GetConsoleWindowWidth())
+            {
+                barLength -= elapsedLength;
+            }
+
+            //barLength -= elapsedLength; // elapsed time
+
+            if (size == BarSize.Full && (location == PercentLocation.Left || location == PercentLocation.Right))
             {
                 // This will shorten the bar to fit the progress value outside.
                 barLength -= 5;
@@ -147,7 +168,12 @@ namespace SimpleConsoleProgress
                     digits = progressValue < 100 ? 2 : 3;
                 }
 
-                var substringLength = progressBar.Length / 2;
+                var substringLength = barLength / 2;
+
+                if (digits == 3)
+                {
+                    substringLength++;
+                }
 
                 var accuracyLength = accuracy == 0 ? 0 : accuracy + 1;  // include delimiter character
 
@@ -155,6 +181,16 @@ namespace SimpleConsoleProgress
             }
 
             return progressBar;
+        }
+
+        private static int GetConsoleWindowWidth()
+        {
+            if (Console.LargestWindowWidth == 0)
+            {
+                // This is not running in a Console window (workaround for unit tests).
+                return (int)BarSize.Full;
+            }
+            return Console.WindowWidth;
         }
     }
 }
