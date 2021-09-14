@@ -586,7 +586,6 @@ namespace SimpleConsoleProgress.Tests
             var location = PercentLocation.Left;
             var accuracy = 1;
             var elapsed = new TimeSpan(0, 0, 1);
-            var percentString = "###.#% ";
             var size = BarSize.Full;
 
             var elapsedString = ProgressHelper.GetElapsedString(elapsed);

@@ -25,9 +25,9 @@ namespace SimpleConsoleProgress
 {
     public enum BarSize
     {
-        Small = 10,
-        Medium = 30,
-        Big = 80,
+        Small = 16,
+        Medium = 40,
+        Big = 96,
         Full = 255
     }
 }

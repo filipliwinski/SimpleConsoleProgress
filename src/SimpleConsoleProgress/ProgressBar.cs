@@ -101,24 +101,17 @@ namespace SimpleConsoleProgress
             if (size != BarSize.Full && (int)size < GetConsoleWindowWidth())
             {
                 barLength = (int)size - 2;
-
-                //if (barLength + elapsedLength >= GetConsoleWindowWidth())
-                //{
-                //    barLength -= elapsedLength;
-                //}
             }
             else
             {
                 barLength = GetConsoleWindowWidth() - 2; // brackets []
             }
 
-            // elapsed time
+            // Make space for elapsed time.
             if (barLength + elapsedLength >= GetConsoleWindowWidth())
             {
                 barLength -= elapsedLength;
             }
-
-            //barLength -= elapsedLength; // elapsed time
 
             if (size == BarSize.Full && (location == PercentLocation.Left || location == PercentLocation.Right))
             {
@@ -127,7 +120,7 @@ namespace SimpleConsoleProgress
 
                 if (accuracy > 0)
                 {
-                    barLength -= accuracy + 1;  // decimal points + delimiter
+                    barLength -= accuracy + 1;  // Include decimal points and delimiter
                 }
             }
 
@@ -162,22 +155,17 @@ namespace SimpleConsoleProgress
 
             if (location == PercentLocation.Middle)
             {
-                var digits = 1;
-                if (progressValue >= 10)
+                var postfix = 0;
+                var substringLength = barLength / 2 + 1; // Adding 1 for centering the progress value.
+
+                var progressLength = progressString.Length;
+
+                if (progressLength % 2 == 1)
                 {
-                    digits = progressValue < 100 ? 2 : 3;
+                    postfix++;
                 }
-
-                var substringLength = barLength / 2;
-
-                if (digits == 3)
-                {
-                    substringLength++;
-                }
-
-                var accuracyLength = accuracy == 0 ? 0 : accuracy + 1;  // include delimiter character
-
-                return progressBar.Substring(0, substringLength - digits) + progressString + progressBar.Substring(substringLength + 1 + accuracyLength);
+                
+                progressBar =  progressBar.Substring(0, substringLength - progressLength / 2) + progressString + progressBar.Substring(substringLength + progressLength / 2 + postfix);
             }
 
             return progressBar;
@@ -187,7 +175,7 @@ namespace SimpleConsoleProgress
         {
             if (Console.LargestWindowWidth == 0)
             {
-                // This is not running in a Console window (workaround for unit tests).
+                // This does not run in a Console window (workaround for unit tests).
                 return (int)BarSize.Full;
             }
             return Console.WindowWidth;
