@@ -18,7 +18,7 @@ Download from [NuGet](https://www.nuget.org/packages/SimpleConsoleProgress/).
 
 ### Single-line progress bar
 
-Progress bar is updating in a single line. Use it if the progress is the only output in the process.
+The progress bar is updated in one line. Use it if the progress is the only output in the process.
 
 <img src="./assets/img/singleLine.gif?raw=true"/>
 
@@ -39,6 +39,19 @@ Each progress update is written on a new line.
     for (int i = 0; i < total; i++)
     {
         ProgressBar.WriteLine(i, total);
+    }
+    Console.WriteLine("Process completed.");
+
+### No progress bar
+
+Shows just the progress value.
+
+<img src="./assets/img/noProgressBar.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        Progress.Write(i, total);
     }
     Console.WriteLine("Process completed.");
 
@@ -82,6 +95,43 @@ By default, single-line progress bar persists in the output. You can hide it whe
     for (int i = 0; i < total; i++)
     {
         ProgressBar.Write(i, total, autoHide: true);
+    }
+    Console.WriteLine("Process completed.");
+
+#### Size
+
+Use one of four different bar sizes. By default the progress bar size is set to Full - the full width of the console window.
+
+##### Size - Small (16 characters)
+
+<img src="./assets/img/size-small.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, size: BarSize.Small);
+    }
+    Console.WriteLine("Process completed.");
+
+##### Size - Medium (40 characters)
+
+<img src="./assets/img/size-medium.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, size: BarSize.Medium);
+    }
+    Console.WriteLine("Process completed.");
+
+##### Size - Big (88 characters)
+
+<img src="./assets/img/size-big.gif?raw=true"/>
+
+    var total = 20;
+    for (int i = 0; i < total; i++)
+    {
+        ProgressBar.Write(i, total, size: BarSize.Big);
     }
     Console.WriteLine("Process completed.");
 
