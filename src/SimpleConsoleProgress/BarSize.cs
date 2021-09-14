@@ -27,7 +27,7 @@ namespace SimpleConsoleProgress
     {
         Small = 16,
         Medium = 40,
-        Big = 96,
+        Big = 88,
         Full = 255
     }
 }
