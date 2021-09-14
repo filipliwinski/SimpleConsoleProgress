@@ -4,6 +4,8 @@ Free and open-source library with a simple progress indicator for .NET console p
 
 [![Build Status](https://filipliwinski.visualstudio.com/SimpleConsoleProgress/_apis/build/status/SimpleConsoleProgress?branchName=master)](https://filipliwinski.visualstudio.com/SimpleConsoleProgress/_build/latest?definitionId=2&branchName=master)
 [![CodeQL](https://github.com/filipliwinski/SimpleConsoleProgress/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/filipliwinski/SimpleConsoleProgress/actions/workflows/codeql-analysis.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=filipliwinski_SimpleConsoleProgress&metric=coverage)](https://sonarcloud.io/dashboard?id=filipliwinski_SimpleConsoleProgress)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=filipliwinski_SimpleConsoleProgress&metric=alert_status)](https://sonarcloud.io/dashboard?id=filipliwinski_SimpleConsoleProgress)
 
 Support for .NET Framework (4.5+), .NET Core and .NET 5.
 
