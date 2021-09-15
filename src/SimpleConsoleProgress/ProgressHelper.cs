@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //  
 //  Copyright (c) 2020-2021 Filip Liwiński
 //  
@@ -45,8 +45,85 @@ namespace SimpleConsoleProgress
 
         internal static string GetElapsedString(TimeSpan elapsed)
         {
-            var format = elapsed.Hours > 0 ? "hh\\:mm\\:ss" : elapsed.Minutes > 0 ? "mm\\:ss" : elapsed.Seconds > 0 ? "mm\\:ss\\.fff" : "ss\\.fff";
+            var format = "ss\\.fff";
+
+            if (elapsed.Seconds > 0)
+            {
+                format = "mm\\:ss\\.fff";
+            }
+            if (elapsed.Minutes > 0)
+            {
+                format = "mm\\:ss";
+            }
+            if (elapsed.Hours > 0)
+            {
+                format = "hh\\:mm\\:ss";
+            }
+
             return $" {elapsed.ToString(format)}";
+        }
+
+        internal static decimal GetProgressValue(int current, int total)
+        {
+            ValidateInputs(current, total);
+
+            return (current + 1) * 100 / (decimal)total;
+        }
+
+        internal static string GetProgressString(decimal progressValue, PercentLocation location, int accuracy)
+        {
+            string progressString;
+
+            switch (location)
+            {
+                case PercentLocation.Left:
+                case PercentLocation.Right:
+                    if (accuracy == 0)
+                    {
+                        progressString = $"{progressValue,3:0}";
+                    }
+                    else if (accuracy == 1)
+                    {
+                        progressString = $"{progressValue,5:0.0}";
+                    }
+                    else if (accuracy == 2)
+                    {
+                        progressString = $"{progressValue,6:0.00}";
+                    }
+                    else
+                    {
+                        progressString = $"{progressValue,7:0.000}";
+                    }
+                    break;
+                case PercentLocation.Middle:
+                    if (accuracy == 0)
+                    {
+                        progressString = $"{progressValue:0}";
+                    }
+                    else if (accuracy == 1)
+                    {
+                        progressString = $"{progressValue:0.0}";
+                    }
+                    else if (accuracy == 2)
+                    {
+                        progressString = $"{progressValue:0.00}";
+                    }
+                    else
+                    {
+                        progressString = $"{progressValue:0.000}";
+                    }
+                    break;
+                default:
+                    progressString = "";
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(progressString))
+            {
+                progressString += '%';
+            }
+
+            return progressString;
         }
     }
 }

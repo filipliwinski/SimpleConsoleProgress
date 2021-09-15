@@ -22,17 +22,10 @@
 //
 
 using System;
+using System.Text;
 
 namespace SimpleConsoleProgress
 {
-    public enum PercentLocation
-    {
-        None,
-        Left,
-        Middle,
-        Right
-    }
-
     /// <summary>
     /// Allows to write the progress bar to the standard output stream.
     /// </summary>
@@ -47,14 +40,14 @@ namespace SimpleConsoleProgress
         /// <param name="character">Character to show in the progress bar.</param>
         /// <param name="autoHide">If true, the progress bar is removed upon completion.</param>
         /// <param name="location">Specifies the position of the percentage.</param>
-        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false, PercentLocation location = PercentLocation.Middle, int accuracy = 0)
+        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false, PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
         {
             if (current + 1 < total)
             {
                 Console.CursorVisible = false;
             }
             Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(GetProgress(current, total, Console.WindowWidth, elapsed, character, location, accuracy));
+            Console.Write(GetProgress(current, total, size, elapsed, character, location, accuracy));
             if (current + 1 >= total)
             {
                 if (autoHide)
@@ -83,15 +76,15 @@ namespace SimpleConsoleProgress
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="character">Character to show in the progress bar.</param>
         /// <param name="location">Specifies the position of the percentage.</param>
-        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = 0)
+        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
         {
-            Console.WriteLine(GetProgress(current, total, Console.WindowWidth, elapsed, character, location, accuracy));
+            Console.WriteLine(GetProgress(current, total, size, elapsed, character, location, accuracy));
         }
 
         internal static string GetProgress(
             int current,
             int total,
-            int barLength,
+            BarSize size = BarSize.Full,
             TimeSpan? elapsed = null,
             char character = '#',
             PercentLocation location = PercentLocation.Middle,
@@ -102,103 +95,90 @@ namespace SimpleConsoleProgress
                 accuracy = 3;
             }
 
-            barLength -= elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0; // elapsed time
+            int barLength;
+            var elapsedLength = elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0;
 
-            barLength -= 2; // brackets []
-
-            if (location == PercentLocation.Left || location == PercentLocation.Right)
+            if (size != BarSize.Full && (int)size < GetConsoleWindowWidth())
             {
-                // This will shorten the bar to fit the progress outside.
+                barLength = (int)size - 2;
+            }
+            else
+            {
+                barLength = GetConsoleWindowWidth() - 2; // brackets []
+            }
+
+            // Make space for elapsed time.
+            if (barLength + elapsedLength >= GetConsoleWindowWidth())
+            {
+                barLength -= elapsedLength;
+            }
+
+            if (size == BarSize.Full && (location == PercentLocation.Left || location == PercentLocation.Right))
+            {
+                // This will shorten the bar to fit the progress value outside.
                 barLength -= 5;
 
                 if (accuracy > 0)
                 {
-                    barLength -= accuracy + 1;  // decimal points + delimiter
+                    barLength -= accuracy + 1;  // Include decimal points and delimiter
                 }
             }
 
-            ProgressHelper.ValidateInputs(current, total);
+            decimal progressValue = ProgressHelper.GetProgressValue(current, total);
+            string progressString = ProgressHelper.GetProgressString(progressValue, location, accuracy);
+            
+            var progressBuilder = new StringBuilder();
 
-            decimal percent = (current + 1) * 100 / total;
-            string percentString;
-
-            switch (location)
-            {
-                case PercentLocation.Left:
-                case PercentLocation.Right:
-                    if (accuracy == 0)
-                    {
-                        percentString = $"{percent,3:0}";
-                    }
-                    else if (accuracy == 1)
-                    {
-                        percentString = $"{percent,5:0.0}";
-                    }
-                    else if (accuracy == 2)
-                    {
-                        percentString = $"{percent,6:0.00}";
-                    }
-                    else
-                    {
-                        percentString = $"{percent,7:0.000}";
-                    }
-                    break;
-                case PercentLocation.Middle:
-                    if (accuracy == 0)
-                    {
-                        percentString = $"{percent:0}";
-                    }
-                    else if (accuracy == 1)
-                    {
-                        percentString = $"{percent:0.0}";
-                    }
-                    else if (accuracy == 2)
-                    {
-                        percentString = $"{percent:0.00}";
-                    }
-                    else
-                    {
-                        percentString = $"{percent:0.000}";
-                    }
-                    break;
-                default:
-                    percentString = "";
-                    break;
-            }
-
-            var progressBar = location == PercentLocation.Left ? $"{percentString}% [" : "[";
+            progressBuilder.Append(location == PercentLocation.Left ? $"{progressString} [" : "[");
 
             for (byte i = 0; i < barLength; i++)
             {
-                var position = barLength * percent / 100 - 1;
-                if (percent > 0 && i <= position)
+                var position = barLength * progressValue / 100 - 1;
+                if (progressValue > 0 && i <= position)
                 {
-                    progressBar += character;
+                    progressBuilder.Append(character);
                 }
                 else
                 {
-                    progressBar += " ";
+                    progressBuilder.Append(" ");
                 }
             }
 
-            progressBar += location == PercentLocation.Right ? $"] {percentString}%" : "]";
+            progressBuilder.Append(location == PercentLocation.Right ? $"] {progressString}" : "]");
 
             if (elapsed.HasValue)
             {
-                progressBar += ProgressHelper.GetElapsedString(elapsed.Value);
+                progressBuilder.Append(ProgressHelper.GetElapsedString(elapsed.Value));
             }
+
+            var progressBar = progressBuilder.ToString();
 
             if (location == PercentLocation.Middle)
             {
-                var digits = percent < 10 ? 1 : percent < 100 ? 2 : 3;
-                var substringLength = progressBar.Length / 2;
+                var postfix = 0;
+                var substringLength = barLength / 2 + 1; // Adding 1 for centering the progress value.
 
-                var accuracyLength = accuracy == 0 ? 0 : accuracy + 1;  // include delimiter character
+                var progressLength = progressString.Length;
 
-                return progressBar.Substring(0, substringLength - digits) + percentString + "%" + progressBar.Substring(substringLength + 1 + accuracyLength);
+                if (progressLength % 2 == 1)
+                {
+                    postfix++;
+                }
+                
+                progressBar =  progressBar.Substring(0, substringLength - progressLength / 2) + progressString + progressBar.Substring(substringLength + progressLength / 2 + postfix);
             }
 
             return progressBar;
+        }
+
+        private static int GetConsoleWindowWidth()
+        {
+            if (Console.LargestWindowWidth == 0)
+            {
+                // This does not run in a Console window (workaround for unit tests).
+                return (int)BarSize.Full;
+            }
+            return Console.WindowWidth;
         }
     }
 }
