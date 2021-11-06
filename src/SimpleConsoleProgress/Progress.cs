@@ -37,7 +37,7 @@ namespace SimpleConsoleProgress
         /// <param name="total">Total number of items.</param>
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="autoHide">If true, the progress is removed upon completion.</param>
-        public static void Write(int current, int total, TimeSpan? elapsed = null, bool autoHide = false, int accuracy = 0)
+        public static void Write(int current, int total, TimeSpan? elapsed = null, bool autoHide = false, int accuracy = -1)
         {
             if (current + 1 < total)
             {
@@ -71,7 +71,7 @@ namespace SimpleConsoleProgress
         /// <param name="current">Current item number (not the percentage).</param>
         /// <param name="total">Total number of items.</param>
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
-        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, int accuracy = 0)
+        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, int accuracy = -1)
         {
             Console.WriteLine(GetProgress(current, total, elapsed, accuracy));
         }
@@ -79,8 +79,9 @@ namespace SimpleConsoleProgress
         private static string GetProgress(int current, int total, TimeSpan? elapsed, int accuracy)
         {
             var progressValue = ProgressHelper.GetProgressValue(current, total);
+            var accuracyValue = ProgressHelper.SetAccuracyValue(accuracy, total);
 
-            var progressString = ProgressHelper.GetProgressString(progressValue, PercentLocation.Middle, accuracy);
+            var progressString = ProgressHelper.GetProgressString(progressValue, PercentLocation.Middle, accuracyValue);
 
             if (elapsed.HasValue)
             {

@@ -40,7 +40,7 @@ namespace SimpleConsoleProgress
         /// <param name="character">Character to show in the progress bar.</param>
         /// <param name="autoHide">If true, the progress bar is removed upon completion.</param>
         /// <param name="location">Specifies the position of the percentage.</param>
-        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false, PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
+        public static void Write(int current, int total, TimeSpan? elapsed = null, char character = '#', bool autoHide = false, PercentLocation location = PercentLocation.Middle, int accuracy = -1, BarSize size = BarSize.Full)
         {
             if (current + 1 < total)
             {
@@ -76,7 +76,7 @@ namespace SimpleConsoleProgress
         /// <param name="elapsed">Total time elapsed since the start of the process.</param>
         /// <param name="character">Character to show in the progress bar.</param>
         /// <param name="location">Specifies the position of the percentage.</param>
-        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
+        public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = -1, BarSize size = BarSize.Full)
         {
             Console.WriteLine(GetProgress(current, total, size, elapsed, character, location, accuracy));
         }
@@ -88,12 +88,9 @@ namespace SimpleConsoleProgress
             TimeSpan? elapsed = null,
             char character = '#',
             PercentLocation location = PercentLocation.Middle,
-            int accuracy = 0)
+            int accuracy = -1)
         {
-            if (accuracy > 3)
-            {
-                accuracy = 3;
-            }
+            int accuracyValue = ProgressHelper.SetAccuracyValue(accuracy, total);
 
             int barLength;
             var elapsedLength = elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0;
@@ -118,14 +115,14 @@ namespace SimpleConsoleProgress
                 // This will shorten the bar to fit the progress value outside.
                 barLength -= 5;
 
-                if (accuracy > 0)
+                if (accuracyValue > 0)
                 {
-                    barLength -= accuracy + 1;  // Include decimal points and delimiter
+                    barLength -= accuracyValue + 1;  // Include decimal points and delimiter
                 }
             }
 
             decimal progressValue = ProgressHelper.GetProgressValue(current, total);
-            string progressString = ProgressHelper.GetProgressString(progressValue, location, accuracy);
+            string progressString = ProgressHelper.GetProgressString(progressValue, location, accuracyValue);
             
             var progressBuilder = new StringBuilder();
 

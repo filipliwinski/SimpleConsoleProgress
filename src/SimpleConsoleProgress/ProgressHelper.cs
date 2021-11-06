@@ -125,5 +125,32 @@ namespace SimpleConsoleProgress
 
             return progressString;
         }
+
+        internal static int SetAccuracyValue(int accuracy, int total)
+        {
+            if (accuracy == -1)
+            {
+                if (total < 10000)
+                {
+                    return 0;
+                }
+                if (total < 100000)
+                {
+                    return 1;
+                }
+                if (total < 1000000)
+                {
+                    return 2;
+                }
+                return 3;
+            }
+
+            if (accuracy > 3)
+            {
+                return 3;
+            }
+
+            return accuracy;
+        }
     }
 }
