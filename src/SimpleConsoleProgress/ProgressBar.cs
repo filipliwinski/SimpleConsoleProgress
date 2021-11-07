@@ -90,13 +90,9 @@ namespace SimpleConsoleProgress
             PercentLocation location = PercentLocation.Middle,
             int accuracy = 0)
         {
-            if (accuracy > 3)
-            {
-                accuracy = 3;
-            }
-
             int barLength;
             var elapsedLength = elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0;
+            var accuracyLevel = ProgressHelper.CheckAccuracy(accuracy);
 
             if (size != BarSize.Full && (int)size < GetConsoleWindowWidth())
             {
@@ -118,14 +114,14 @@ namespace SimpleConsoleProgress
                 // This will shorten the bar to fit the progress value outside.
                 barLength -= 5;
 
-                if (accuracy > 0)
+                if (accuracyLevel > 0)
                 {
-                    barLength -= accuracy + 1;  // Include decimal points and delimiter
+                    barLength -= (int)accuracyLevel + 1;  // Include decimal points and delimiter
                 }
             }
 
             decimal progressValue = ProgressHelper.GetProgressValue(current, total);
-            string progressString = ProgressHelper.GetProgressString(progressValue, location, accuracy);
+            string progressString = ProgressHelper.GetProgressString(progressValue, location, accuracyLevel);
             
             var progressBuilder = new StringBuilder();
 

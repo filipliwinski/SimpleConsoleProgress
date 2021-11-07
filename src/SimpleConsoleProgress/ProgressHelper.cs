@@ -70,7 +70,7 @@ namespace SimpleConsoleProgress
             return (current + 1) * 100 / (decimal)total;
         }
 
-        internal static string GetProgressString(decimal progressValue, PercentLocation location, int accuracy)
+        internal static string GetProgressString(decimal progressValue, PercentLocation location, Accuracy accuracy)
         {
             string progressString;
 
@@ -78,39 +78,37 @@ namespace SimpleConsoleProgress
             {
                 case PercentLocation.Left:
                 case PercentLocation.Right:
-                    if (accuracy == 0)
+                    switch (accuracy)
                     {
-                        progressString = $"{progressValue,3:0}";
-                    }
-                    else if (accuracy == 1)
-                    {
-                        progressString = $"{progressValue,5:0.0}";
-                    }
-                    else if (accuracy == 2)
-                    {
-                        progressString = $"{progressValue,6:0.00}";
-                    }
-                    else
-                    {
-                        progressString = $"{progressValue,7:0.000}";
+                        case Accuracy.Low:
+                            progressString = $"{progressValue,5:0.0}";
+                            break;
+                        case Accuracy.Medium:
+                            progressString = $"{progressValue,6:0.00}";
+                            break;
+                        case Accuracy.High:
+                            progressString = $"{progressValue,7:0.000}";
+                            break;
+                        default:
+                            progressString = $"{progressValue,3:0}";
+                            break;
                     }
                     break;
                 case PercentLocation.Middle:
-                    if (accuracy == 0)
+                    switch (accuracy)
                     {
-                        progressString = $"{progressValue:0}";
-                    }
-                    else if (accuracy == 1)
-                    {
-                        progressString = $"{progressValue:0.0}";
-                    }
-                    else if (accuracy == 2)
-                    {
-                        progressString = $"{progressValue:0.00}";
-                    }
-                    else
-                    {
-                        progressString = $"{progressValue:0.000}";
+                        case Accuracy.Low:
+                            progressString = $"{progressValue:0.0}";
+                            break;
+                        case Accuracy.Medium:
+                            progressString = $"{progressValue:0.00}";
+                            break;
+                        case Accuracy.High:
+                            progressString = $"{progressValue:0.000}";
+                            break;
+                        default:
+                            progressString = $"{progressValue:0}";
+                            break;
                     }
                     break;
                 default:
@@ -124,6 +122,19 @@ namespace SimpleConsoleProgress
             }
 
             return progressString;
+        }
+
+        internal static Accuracy CheckAccuracy(int accuracy)
+        {
+            if (accuracy < 0)
+            {
+                return Accuracy.Integer;
+            }
+            if (accuracy > 3)
+            {
+                return Accuracy.High;
+            }
+            return (Accuracy)accuracy;
         }
     }
 }
