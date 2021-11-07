@@ -85,7 +85,7 @@ namespace SimpleConsoleProgress.Tests
         [InlineData(-1)]
         public void WhenAccuracyLessThanZero_ThenReturnsInteger(int accuracy)
         {
-            var accuracyLevel = ProgressHelper.CheckAccuracy(accuracy);
+            var accuracyLevel = ProgressHelper.SetAccuracy(accuracy);
 
             Assert.True(accuracy < 0);
             Assert.Equal(Accuracy.Integer, accuracyLevel);
@@ -96,7 +96,7 @@ namespace SimpleConsoleProgress.Tests
         {
             var accuracy = 0;
 
-            var accuracyLevel = ProgressHelper.CheckAccuracy(accuracy);
+            var accuracyLevel = ProgressHelper.SetAccuracy(accuracy);
 
             Assert.Equal(0, accuracy);
             Assert.Equal(Accuracy.Integer, accuracyLevel);
@@ -107,7 +107,7 @@ namespace SimpleConsoleProgress.Tests
         {
             var accuracy = 1;
 
-            var accuracyLevel = ProgressHelper.CheckAccuracy(accuracy);
+            var accuracyLevel = ProgressHelper.SetAccuracy(accuracy);
 
             Assert.Equal(1, accuracy);
             Assert.Equal(Accuracy.Low, accuracyLevel);
@@ -118,7 +118,7 @@ namespace SimpleConsoleProgress.Tests
         {
             var accuracy = 2;
 
-            var accuracyLevel = ProgressHelper.CheckAccuracy(accuracy);
+            var accuracyLevel = ProgressHelper.SetAccuracy(accuracy);
 
             Assert.Equal(2, accuracy);
             Assert.Equal(Accuracy.Medium, accuracyLevel);
@@ -129,7 +129,7 @@ namespace SimpleConsoleProgress.Tests
         {
             var accuracy = 3;
 
-            var accuracyLevel = ProgressHelper.CheckAccuracy(accuracy);
+            var accuracyLevel = ProgressHelper.SetAccuracy(accuracy);
 
             Assert.Equal(3, accuracy);
             Assert.Equal(Accuracy.High, accuracyLevel);
@@ -141,7 +141,7 @@ namespace SimpleConsoleProgress.Tests
         [InlineData(int.MaxValue)]
         public void WhenAccuracyMoreThanThree_ThenReturnsInteger(int accuracy)
         {
-            var accuracyLevel = ProgressHelper.CheckAccuracy(accuracy);
+            var accuracyLevel = ProgressHelper.SetAccuracy(accuracy);
 
             Assert.True(accuracy > 3);
             Assert.Equal(Accuracy.High, accuracyLevel);

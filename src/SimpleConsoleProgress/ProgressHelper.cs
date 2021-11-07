@@ -124,7 +124,7 @@ namespace SimpleConsoleProgress
             return progressString;
         }
 
-        internal static Accuracy CheckAccuracy(int accuracy)
+        internal static Accuracy SetAccuracy(int accuracy)
         {
             if (accuracy < 0)
             {

@@ -92,7 +92,7 @@ namespace SimpleConsoleProgress
         {
             int barLength;
             var elapsedLength = elapsed.HasValue ? ProgressHelper.GetElapsedString(elapsed.Value).Length : 0;
-            var accuracyLevel = ProgressHelper.CheckAccuracy(accuracy);
+            var accuracyLevel = ProgressHelper.SetAccuracy(accuracy);
 
             if (size != BarSize.Full && (int)size < GetConsoleWindowWidth())
             {
