@@ -31,7 +31,7 @@ namespace SimpleConsoleProgress
         {
             if (total <= 0)
             {
-                throw new ArgumentException("Unable to write progress. Total below ore equal zero.");
+                throw new ArgumentException("Unable to write progress. Total below or equal zero.");
             }
             if (current < 0)
             {
