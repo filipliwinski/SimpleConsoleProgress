@@ -78,9 +78,11 @@ namespace SimpleConsoleProgress
 
         private static string GetProgress(int current, int total, TimeSpan? elapsed, int accuracy)
         {
+            var accuracyLevel = ProgressHelper.SetAccuracy(accuracy);
+
             var progressValue = ProgressHelper.GetProgressValue(current, total);
 
-            var progressString = ProgressHelper.GetProgressString(progressValue, PercentLocation.Middle, accuracy);
+            var progressString = ProgressHelper.GetProgressString(progressValue, PercentLocation.Middle, accuracyLevel);
 
             if (elapsed.HasValue)
             {
