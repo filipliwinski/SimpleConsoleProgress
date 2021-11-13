@@ -11,10 +11,11 @@ resources:
   - repository: templates
     type: git
     name: GitHub.Public/YAML.Templates
-    ref: refs/tags/v.1.2.0
+    ref: refs/tags/v.1.2.1
 
 steps:
   - template: build.ci.yml@templates
     parameters:
       projectName: SimpleConsoleProgress
       unitTestsProjectName: SimpleConsoleProgress.Tests
+      sonarCloudProjectKey: filipliwinski_SimpleConsoleProgress
