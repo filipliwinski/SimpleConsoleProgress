@@ -11,7 +11,7 @@ resources:
   - repository: templates
     type: git
     name: GitHub.Public/YAML.Templates
-    ref: refs/tags/v.1.2.1
+    ref: refs/tags/v.1.3.0
 
 steps:
   - template: build.ci.yml@templates
