@@ -18,3 +18,4 @@ steps:
     parameters:
       projectName: SimpleConsoleProgress
       unitTestsProjectName: SimpleConsoleProgress.Tests
+      sonarCloudProjectKey: filipliwinski_SimpleConsoleProgress
