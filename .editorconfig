@@ -7,7 +7,7 @@ insert_final_newline = true
 
 [*.cs]
 indent_size = 4
-file_header_template = MIT License\n \n Copyright (c) 2020-2023 Filip Liwiński\n \n Licensed under the MIT License. See the LICENSE file in the project root for license information.\n
+file_header_template = Copyright (c) Filip Liwiński\n \n Licensed under the MIT License. See the LICENSE file in the project root for license information.\n
 
 # Xml files
 [*.xml]
