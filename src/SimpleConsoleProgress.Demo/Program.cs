@@ -79,7 +79,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\nAutohide progress bar (single-line)\n");
+            Console.WriteLine("\nAutohide progress bar (single-line only)\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(delay).Wait();
@@ -87,7 +87,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("Size: Small\n");
+            Console.WriteLine("\nSize: Small\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(delay).Wait();
@@ -95,7 +95,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("Size: Medium\n");
+            Console.WriteLine("\nSize: Medium\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(delay).Wait();
@@ -103,7 +103,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("Size: Big\n");
+            Console.WriteLine("\nSize: Big\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(delay).Wait();
@@ -111,7 +111,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("Size: Full\n");
+            Console.WriteLine("\nSize: Full\n");
             for (int i = 0; i < total; i++)
             {
                 Task.Delay(delay).Wait();
@@ -168,7 +168,9 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\n\n\n\n");
+            Console.WriteLine("\n\n");
+
+            Console.ReadKey();
         }
     }
 }

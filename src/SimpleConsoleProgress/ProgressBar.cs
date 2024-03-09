@@ -46,25 +46,41 @@ namespace SimpleConsoleProgress
             {
                 Console.CursorVisible = false;
             }
-            Console.SetCursorPosition(0, Console.CursorTop);
+            var initialCursorTop = Console.CursorTop;
+            Console.SetCursorPosition(0, initialCursorTop);
+            using (System.IO.StreamWriter outputFile = new System.IO.StreamWriter("CursorTop.txt", true))
+            {
+                outputFile.WriteLine($"Before write: {Console.CursorTop}");
+            }
             Console.Write(GetProgress(current, total, size, elapsed, character, location, accuracy));
             if (current + 1 >= total)
             {
                 if (autoHide)
                 {
                     // Clear console line
-                    Console.SetCursorPosition(0, Console.CursorTop);
+                    Console.SetCursorPosition(0, initialCursorTop);
                     for (int i = 0; i < Console.WindowWidth; i++)
                     {
                         Console.Write(" ");
                     }
-                    Console.SetCursorPosition(0, Console.CursorTop);
+                    Console.SetCursorPosition(0, initialCursorTop);
                 }
                 else
                 {
                     Console.WriteLine();
                 }
                 Console.CursorVisible = true;
+            }
+            if (autoHide || current + 1 != total) {
+                Console.SetCursorPosition(0, initialCursorTop);
+            }
+            else
+            {
+                Console.SetCursorPosition(0, initialCursorTop + 1);
+            }
+            using (System.IO.StreamWriter outputFile = new System.IO.StreamWriter("CursorTop.txt", true))
+            {
+                outputFile.WriteLine($"After write: {Console.CursorTop}");
             }
         }
 
@@ -78,7 +94,17 @@ namespace SimpleConsoleProgress
         /// <param name="location">Specifies the position of the percentage.</param>
         public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
         {
+            var initialCursorTop = Console.CursorTop;
+            using (System.IO.StreamWriter outputFile = new System.IO.StreamWriter("CursorTop.txt", true))
+            {
+                outputFile.WriteLine($"Before write: {Console.CursorTop}");
+            }
             Console.WriteLine(GetProgress(current, total, size, elapsed, character, location, accuracy));
+            Console.SetCursorPosition(0, initialCursorTop + 1);
+            using (System.IO.StreamWriter outputFile = new System.IO.StreamWriter("CursorTop.txt", true))
+            {
+                outputFile.WriteLine($"After write: {Console.CursorTop}");
+            }
         }
 
         internal static string GetProgress(
