@@ -7,12 +7,12 @@ Free and open-source library with a simple progress indicator for .NET console p
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=filipliwinski_SimpleConsoleProgress&metric=coverage)](https://sonarcloud.io/dashboard?id=filipliwinski_SimpleConsoleProgress)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=filipliwinski_SimpleConsoleProgress&metric=alert_status)](https://sonarcloud.io/dashboard?id=filipliwinski_SimpleConsoleProgress)
 
-Support for .NET Framework (4.5+), .NET Core and .NET 5.
+Support for .NET Framework (4.5+), .NET Core and .NET.
 
 Download from [NuGet](https://www.nuget.org/packages/SimpleConsoleProgress/).
 
 [![NuGet](https://img.shields.io/nuget/v/SimpleConsoleProgress.svg)](https://www.nuget.org/packages/SimpleConsoleProgress/)
-[![NuGet](https://img.shields.io/nuget/dt/SimpleConsoleProgress.svg)](https://www.nuget.org/packages/SimpleConsoleProgress/) 
+[![NuGet](https://img.shields.io/nuget/dt/SimpleConsoleProgress.svg)](https://www.nuget.org/packages/SimpleConsoleProgress/)
 
 ## How to use
 
@@ -178,7 +178,7 @@ The current percentage is displayed by default in the middle of the progress bar
 
 By default, integer values are displayed. You can increase the accuracy to three decimal places.
 
-##### Accuracy - one decimal place 
+##### Accuracy - one decimal place
 
 <img src="./assets/img/accuracy-1.gif?raw=true"/>
 

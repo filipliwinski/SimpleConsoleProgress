@@ -150,7 +150,7 @@ namespace SimpleConsoleProgress.Demo
             }
             Console.WriteLine("Process completed.");
 
-            Console.WriteLine("\n\n");
+            Console.WriteLine("\n\nPress any key to close...");
 
             Console.ReadKey();
         }
