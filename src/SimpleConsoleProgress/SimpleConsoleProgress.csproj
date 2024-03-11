@@ -13,7 +13,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>simple, console, progress, progressbar</PackageTags>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <Version>1.3.1</Version>
+    <Version>1.3.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
