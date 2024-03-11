@@ -5,18 +5,19 @@ pr:
 - develop
 
 pool:
-  vmImage: windows-2019
+  vmImage: windows-latest
 
 resources:
   repositories:
   - repository: templates
     type: git
     name: GitHub.Public/YAML.Templates
-    ref: refs/tags/v.1.2.0
+    ref: refs/tags/v.1.3.1
 
 steps:
   - template: build.pr.yml@templates
     parameters:
+      dotNetSdkVersion: '8.0.x'
       projectName: SimpleConsoleProgress
       unitTestsProjectName: SimpleConsoleProgress.Tests
       sonarCloudProjectKey: filipliwinski_SimpleConsoleProgress

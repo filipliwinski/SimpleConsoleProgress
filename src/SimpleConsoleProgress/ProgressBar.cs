@@ -1,24 +1,6 @@
-// MIT License
+// Copyright (c) Filip Liwiński
 //  
-//  Copyright (c) 2020-2021 Filip Liwiński
-//  
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//  
-//  The above copyright notice and this permission notice shall be included in all
-//  copies or substantial portions of the Software.
-//  
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-//  SOFTWARE.
+//  Licensed under the MIT License. See the LICENSE file in the project root for license information.
 //
 
 using System;
@@ -46,25 +28,39 @@ namespace SimpleConsoleProgress
             {
                 Console.CursorVisible = false;
             }
-            Console.SetCursorPosition(0, Console.CursorTop);
+
+            // Store the value of CursorTop for future reference to prevent wrapping to a new line - #25
+            var initialCursorTop = Console.CursorTop;
+            Console.SetCursorPosition(0, initialCursorTop);
+
             Console.Write(GetProgress(current, total, size, elapsed, character, location, accuracy));
+
             if (current + 1 >= total)
             {
                 if (autoHide)
                 {
                     // Clear console line
-                    Console.SetCursorPosition(0, Console.CursorTop);
+                    Console.SetCursorPosition(0, initialCursorTop);
                     for (int i = 0; i < Console.WindowWidth; i++)
                     {
                         Console.Write(" ");
                     }
-                    Console.SetCursorPosition(0, Console.CursorTop);
                 }
                 else
                 {
                     Console.WriteLine();
                 }
                 Console.CursorVisible = true;
+            }
+
+            // Set position of cursor based on the initial value - #25
+            if (autoHide || current + 1 != total) {
+                Console.SetCursorPosition(0, initialCursorTop);
+            }
+            else
+            {
+                // For the last value move to a new line
+                Console.SetCursorPosition(0, initialCursorTop + 1);
             }
         }
 
@@ -78,7 +74,13 @@ namespace SimpleConsoleProgress
         /// <param name="location">Specifies the position of the percentage.</param>
         public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
         {
+            // Store the value of CursorTop for future reference to prevent wrapping to a new line - #25
+            var initialCursorTop = Console.CursorTop;
+
             Console.WriteLine(GetProgress(current, total, size, elapsed, character, location, accuracy));
+
+            // Set position of cursor based on the initial value - #25
+            Console.SetCursorPosition(0, initialCursorTop + 1);
         }
 
         internal static string GetProgress(
