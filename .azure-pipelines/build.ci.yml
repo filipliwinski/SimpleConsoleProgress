@@ -16,6 +16,7 @@ resources:
 steps:
   - template: build.ci.yml@templates
     parameters:
+      dotNetSdkVersion: '8.0.x'
       projectName: SimpleConsoleProgress
       unitTestsProjectName: SimpleConsoleProgress.Tests
       sonarCloudProjectKey: filipliwinski_SimpleConsoleProgress
