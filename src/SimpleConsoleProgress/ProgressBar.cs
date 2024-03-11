@@ -28,25 +28,39 @@ namespace SimpleConsoleProgress
             {
                 Console.CursorVisible = false;
             }
-            Console.SetCursorPosition(0, Console.CursorTop);
+
+            // Store the value of CursorTop for future reference to prevent wrapping to a new line - #25
+            var initialCursorTop = Console.CursorTop;
+            Console.SetCursorPosition(0, initialCursorTop);
+
             Console.Write(GetProgress(current, total, size, elapsed, character, location, accuracy));
+
             if (current + 1 >= total)
             {
                 if (autoHide)
                 {
                     // Clear console line
-                    Console.SetCursorPosition(0, Console.CursorTop);
+                    Console.SetCursorPosition(0, initialCursorTop);
                     for (int i = 0; i < Console.WindowWidth; i++)
                     {
                         Console.Write(" ");
                     }
-                    Console.SetCursorPosition(0, Console.CursorTop);
                 }
                 else
                 {
                     Console.WriteLine();
                 }
                 Console.CursorVisible = true;
+            }
+
+            // Set position of cursor based on the initial value - #25
+            if (autoHide || current + 1 != total) {
+                Console.SetCursorPosition(0, initialCursorTop);
+            }
+            else
+            {
+                // For the last value move to a new line
+                Console.SetCursorPosition(0, initialCursorTop + 1);
             }
         }
 
@@ -60,7 +74,13 @@ namespace SimpleConsoleProgress
         /// <param name="location">Specifies the position of the percentage.</param>
         public static void WriteLine(int current, int total, TimeSpan? elapsed = null, char character = '#', PercentLocation location = PercentLocation.Middle, int accuracy = 0, BarSize size = BarSize.Full)
         {
+            // Store the value of CursorTop for future reference to prevent wrapping to a new line - #25
+            var initialCursorTop = Console.CursorTop;
+
             Console.WriteLine(GetProgress(current, total, size, elapsed, character, location, accuracy));
+
+            // Set position of cursor based on the initial value - #25
+            Console.SetCursorPosition(0, initialCursorTop + 1);
         }
 
         internal static string GetProgress(
