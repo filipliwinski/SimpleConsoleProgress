@@ -4,7 +4,7 @@ trigger:
 pr: none
 
 pool:
-  vmImage: windows-2019
+  vmImage: windows-latest
 
 resources:
   repositories:
@@ -16,7 +16,7 @@ resources:
 steps:
   - template: build.ci.yml@templates
     parameters:
-      dotNetSdkVersion: '3.1.x'
+      dotNetSdkVersion: '8.0.x'
       projectName: SimpleConsoleProgress
       unitTestsProjectName: SimpleConsoleProgress.Tests
       sonarCloudProjectKey: filipliwinski_SimpleConsoleProgress
